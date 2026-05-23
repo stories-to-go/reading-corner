@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>English Literary Studies Quiz | Reading Corner</title>
+
+  <style>
+    :root {
+      --cream: #f7f1e8;
+      --soft: #fffaf4;
+      --paper: #ffffff;
+      --terracotta: #9c3b34;
+      --terracotta-dark: #7c2d28;
+      --olive: #556b2f;
+      --olive-dark: #3f5221;
+      --blue: #335c81;
+      --text: #2f2a26;
+      --muted: #6c625a;
+      --border: #eadfce;
+      --correct: #2f7d4f;
+      --wrong: #b0443c;
+      --shadow: 0 14px 36px rgba(60, 35, 20, 0.12);
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background:
+        linear-gradient(rgba(34, 24, 18, 0.30), rgba(34, 24, 18, 0.48)),
+        url('cover.png.png') center center / cover fixed no-repeat;
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .page-overlay {
+      min-height: 100vh;
+      background: linear-gradient(to bottom, rgba(247,241,232,0.78), rgba(247,241,232,0.94));
+      padding-bottom: 36px;
+    }
+
+    header {
+      text-align: center;
+      padding: 46px 20px 28px;
+      color: #fff;
+      background: linear-gradient(135deg, rgba(63,82,33,0.93), rgba(85,107,47,0.90));
+      box-shadow: 0 6px 22px rgba(0,0,0,0.14);
+    }
+
+    header .topline {
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      font-size: 14px;
+      opacity: 0.92;
+      margin-bottom: 8px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 44px;
+      line-height: 1.12;
+    }
+
+    header p {
+      margin: 12px auto 0;
+      max-width: 760px;
+      font-size: 18px;
+      opacity: 0.97;
+    }
+
+    main {
+      max-width: 940px;
+      margin: 34px auto;
+      padding: 0 18px;
+    }
+
+    .quiz-shell {
+      background: rgba(255,255,255,0.96);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .start-screen,
+    .question-screen,
+    .end-screen {
+      padding: 34px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #eef3e6;
+      color: var(--olive-dark);
+      border: 1px solid #d4ddca;
+      border-radius: 999px;
+      padding: 7px 13px;
+      font-weight: bold;
+      font-size: 13px;
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      margin: 0 0 16px;
+      color: var(--olive-dark);
+      font-size: 32px;
+      line-height: 1.22;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: 18px;
+      margin-bottom: 24px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 26px 0;
+    }
+
+    .info-card {
+      background: var(--soft);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .info-card strong {
+      display: block;
+      color: var(--terracotta-dark);
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+
+    .info-card span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .progress-area {
+      padding: 24px 34px 0;
+    }
+
+    .progress-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-weight: bold;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    .progress-bar {
+      height: 12px;
+      background: #efe4d8;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid #e3d4c3;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--olive), var(--terracotta));
+      transition: width 0.25s ease;
+    }
+
+    .question-text {
+      font-size: 26px;
+      line-height: 1.28;
+      color: var(--text);
+      margin: 10px 0 24px;
+    }
+
+    .answers {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .answer-btn {
+      width: 100%;
+      text-align: left;
+      background: #fffdf9;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px 18px;
+      font-size: 16px;
+      color: var(--text);
+      cursor: pointer;
+      transition: transform 0.16s ease, background 0.16s ease, border 0.16s ease;
+    }
+
+    .answer-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      background: #f7efe4;
+      border-color: #dcc9b7;
+    }
+
+    .answer-btn:disabled {
+      cursor: default;
+    }
+
+    .answer-btn.correct {
+      background: #e8f5ed;
+      border-color: var(--correct);
+      color: #1f5d3a;
+      font-weight: bold;
+    }
+
+    .answer-btn.wrong {
+      background: #fff0ee;
+      border-color: var(--wrong);
+      color: #8f302a;
+      font-weight: bold;
+    }
+
+    .feedback {
+      display: none;
+      margin-top: 18px;
+      background: #fff8ec;
+      border-left: 6px solid var(--olive);
+      border-radius: 14px;
+      padding: 18px;
+    }
+
+    .feedback h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+    }
+
+    .feedback p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .button-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    button,
+    .link-button {
+      border: none;
+      border-radius: 14px;
+      padding: 14px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: transform 0.16s ease, background 0.16s ease;
+    }
+
+    button:hover,
+    .link-button:hover {
+      transform: translateY(-2px);
+    }
+
+    .primary-action {
+      background: var(--olive);
+      color: #fff;
+    }
+
+    .primary-action:hover {
+      background: var(--olive-dark);
+    }
+
+    .secondary-action {
+      background: #fff2df;
+      color: var(--terracotta-dark);
+      border: 1px solid #ead4b8;
+    }
+
+    .secondary-action:hover {
+      background: #f4e3cc;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .score-big {
+      font-size: 54px;
+      font-weight: bold;
+      color: var(--olive-dark);
+      margin: 12px 0;
+    }
+
+    .result-box {
+      background: var(--soft);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      margin: 22px 0;
+    }
+
+    .review-list {
+      margin-top: 20px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .review-item {
+      background: #fffdf9;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-size: 15px;
+    }
+
+    .review-item strong {
+      color: var(--olive-dark);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 12px 20px 34px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 720px) {
+      body {
+        background-attachment: scroll;
+      }
+
+      header h1 {
+        font-size: 34px;
+      }
+
+      header p {
+        font-size: 16px;
+      }
+
+      .start-screen,
+      .question-screen,
+      .end-screen {
+        padding: 24px;
+      }
+
+      .progress-area {
+        padding: 20px 24px 0;
+      }
+
+      .question-text {
+        font-size: 22px;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .score-big {
+        font-size: 42px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-overlay">
+    <header>
+      <div class="topline">Reading Corner · English</div>
+      <h1>Literary Studies Quiz</h1>
+      <p>Mystery on Tulip Street — Episode 1</p>
+    </header>
+
+    <main>
+      <section class="quiz-shell">
+
+        <div id="startScreen" class="start-screen">
+          <span class="badge">A1–A2 Story · Literary Thinking · 20 Questions</span>
+          <h2>Look at the story like a literary detective.</h2>
+          <p class="lead">
+            This quiz is not only about what happens. It asks how the story works:
+            narration, suspense, dialogue, characterization, setting, clues, and interpretation.
+          </p>
+
+          <div class="info-grid">
+            <div class="info-card">
+              <strong>20</strong>
+              <span>questions</span>
+            </div>
+            <div class="info-card">
+              <strong>Literary</strong>
+              <span>but clear</span>
+            </div>
+            <div class="info-card">
+              <strong>Instant</strong>
+              <span>feedback</span>
+            </div>
+          </div>
+
+          <div class="button-row">
+            <button class="primary-action" onclick="startQuiz()">Start Literary Quiz</button>
+            <a class="link-button secondary-action" href="index.html">Back to Reading Corner</a>
+          </div>
+        </div>
+
+        <div id="quizScreen" class="hidden">
+          <div class="progress-area">
+            <div class="progress-top">
+              <span id="questionCounter">Question 1 of 20</span>
+              <span id="scoreCounter">Score: 0</span>
+            </div>
+            <div class="progress-bar">
+              <div id="progressFill" class="progress-fill"></div>
+            </div>
+          </div>
+
+          <div class="question-screen">
+            <div class="badge" id="categoryBadge">Narration</div>
+            <h2 id="questionText" class="question-text"></h2>
+            <div id="answers" class="answers"></div>
+
+            <div id="feedback" class="feedback">
+              <h3 id="feedbackTitle"></h3>
+              <p id="feedbackText"></p>
+            </div>
+
+            <div class="button-row">
+              <button id="nextButton" class="primary-action hidden" onclick="nextQuestion()">Next question</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="endScreen" class="end-screen hidden">
+          <span class="badge">Quiz completed</span>
+          <h2>Your result</h2>
+          <div id="scoreBig" class="score-big"></div>
+
+          <div class="result-box">
+            <p id="finalMessage" class="lead"></p>
+          </div>
+
+          <div class="button-row">
+            <button class="primary-action" onclick="restartQuiz()">Try again</button>
+            <a class="link-button secondary-action" href="index.html">Back to Reading Corner</a>
+          </div>
+
+          <div id="reviewList" class="review-list"></div>
+        </div>
+
+      </section>
+    </main>
+
+    <footer>
+      © 2026 Reading Corner — Stories to go
+    </footer>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        category: "Genre",
+        question: "Which genre best describes this episode?",
+        answers: [
+          "A mystery story with detective elements",
+          "A fairy tale with magic objects",
+          "A scientific report",
+          "A travel advertisement"
+        ],
+        correct: 0,
+        explanation: "The episode builds around a death, clues, suspects, and a first investigation, so it clearly uses mystery and detective-story elements."
+      },
+      {
+        category: "Opening",
+        question: "What is the effect of beginning with an ordinary Friday evening?",
+        answers: [
+          "It makes the later crime feel more surprising",
+          "It explains the history of Italy",
+          "It removes all suspense from the story",
+          "It makes Giacomo look like a police officer"
+        ],
+        correct: 0,
+        explanation: "The normal beginning creates contrast: everyday life is suddenly interrupted by crime."
+      },
+      {
+        category: "Setting",
+        question: "Why is the apartment building important for the plot?",
+        answers: [
+          "It limits the possible suspects and creates a closed social space",
+          "It shows that the story is about shopping",
+          "It proves that Giacomo is rich",
+          "It makes the football team more important"
+        ],
+        correct: 0,
+        explanation: "The building gathers many neighbors in one place. This makes suspicion, observation, and investigation possible."
+      },
+      {
+        category: "Characterization",
+        question: "How is Giacomo characterized at the beginning?",
+        answers: [
+          "As shy, young, observant, and attracted to Simona",
+          "As cruel and violent",
+          "As a professional detective",
+          "As an old friend of Mr. Cassi"
+        ],
+        correct: 0,
+        explanation: "The narrator shows Giacomo’s shyness with Simona, his young age, and later his attention to details."
+      },
+      {
+        category: "Characterization",
+        question: "What role does Simona play in the story?",
+        answers: [
+          "She becomes Giacomo’s partner in the investigation",
+          "She is the building manager",
+          "She is a journalist",
+          "She is Mr. Cassi’s wife"
+        ],
+        correct: 0,
+        explanation: "Simona listens, questions Giacomo, and agrees to investigate with him. She becomes his detective partner."
+      },
+      {
+        category: "Narration",
+        question: "What does the sentence “How beautiful she is…” mainly show?",
+        answers: [
+          "Giacomo’s inner thoughts",
+          "Simona’s spoken words",
+          "The police report",
+          "Miss Valle’s opinion"
+        ],
+        correct: 0,
+        explanation: "The quotation marks around the thought show Giacomo’s inner perspective."
+      },
+      {
+        category: "Dialogue",
+        question: "Why is there so much dialogue in the episode?",
+        answers: [
+          "It makes the story lively and lets readers discover information step by step",
+          "It stops the plot from moving forward",
+          "It replaces all characterization",
+          "It makes the story impossible to understand"
+        ],
+        correct: 0,
+        explanation: "Dialogue gives the text energy and reveals clues, attitudes, and relationships."
+      },
+      {
+        category: "Suspense",
+        question: "Which detail functions as an early clue?",
+        answers: [
+          "Mr. Cassi’s door is open after the music stops",
+          "Giacomo eats spaghetti",
+          "Simona buys coffee",
+          "There is a supermarket nearby"
+        ],
+        correct: 0,
+        explanation: "The open door is unusual and later becomes important for Giacomo’s suspicion."
+      },
+      {
+        category: "Foreshadowing",
+        question: "The very loud music before the murder mainly works as what?",
+        answers: [
+          "A possible clue and foreshadowing",
+          "A description of a concert",
+          "A joke with no narrative function",
+          "A sign that Mr. Cassi is happy"
+        ],
+        correct: 0,
+        explanation: "The loud music attracts attention and may hide or frame something important. It prepares the mystery."
+      },
+      {
+        category: "Irony",
+        question: "What is ironic about Giacomo’s dream of football glory?",
+        answers: [
+          "He thinks a crowd is shouting his name, but it is only his mother waking him",
+          "He wins a real football match",
+          "Mr. Cassi becomes a football coach",
+          "Simona is watching the match"
+        ],
+        correct: 0,
+        explanation: "The dream creates a comic contrast between heroic fantasy and ordinary family reality."
+      },
+      {
+        category: "Point of View",
+        question: "The story often follows Giacomo’s perception. What is the effect?",
+        answers: [
+          "Readers discover the mystery together with him",
+          "Readers know everything before the characters do",
+          "The police become the main narrators",
+          "The ending is explained at the beginning"
+        ],
+        correct: 0,
+        explanation: "Because the story stays close to Giacomo, readers share his uncertainty and curiosity."
+      },
+      {
+        category: "Character Contrast",
+        question: "How does Miss Valle contrast with Giacomo as an observer?",
+        answers: [
+          "She watches everyone and talks a lot, while Giacomo listens for clues",
+          "She is silent and shy, while Giacomo talks on television",
+          "She is a detective, while Giacomo is a journalist",
+          "She never notices anything"
+        ],
+        correct: 0,
+        explanation: "Miss Valle observes socially and loves attention; Giacomo tries to interpret details as clues."
+      },
+      {
+        category: "Motif",
+        question: "Which motif appears again and again in this episode?",
+        answers: [
+          "Doors, stairs, and movement through the building",
+          "Magic rings",
+          "Sea travel",
+          "Ancient battles"
+        ],
+        correct: 0,
+        explanation: "The elevator, stairs, open door, doorbells, and visits to apartments structure the story."
+      },
+      {
+        category: "Investigation Structure",
+        question: "Why is the sugar excuse useful as a plot device?",
+        answers: [
+          "It gives the young detectives a believable reason to enter apartments",
+          "It solves the murder immediately",
+          "It proves that Mrs. Bianchi is guilty",
+          "It ends the story"
+        ],
+        correct: 0,
+        explanation: "The sugar excuse allows Giacomo and Simona to speak to suspects without saying they are investigating."
+      },
+      {
+        category: "Suspicion",
+        question: "How does the story create suspicion around Mr. Moreno?",
+        answers: [
+          "He reacts strongly when Giacomo says he is a witness",
+          "He gives them a map of the building",
+          "He refuses to talk about children",
+          "He says he was at the hospital"
+        ],
+        correct: 0,
+        explanation: "His serious reaction and the line 'We’ll talk about this again!' make him seem worried and possibly dangerous."
+      },
+      {
+        category: "Character Speech",
+        question: "What does Miss Valle’s repeated phrase “At my age…” reveal?",
+        answers: [
+          "A personal habit that makes her recognizable",
+          "A legal argument",
+          "A secret code",
+          "A police command"
+        ],
+        correct: 0,
+        explanation: "Repeated phrases are a simple way to characterize a person and make them memorable."
+      },
+      {
+        category: "Narrative Tension",
+        question: "Why does the story not reveal the murderer immediately?",
+        answers: [
+          "To keep readers curious and make them interpret clues",
+          "Because there is no mystery",
+          "Because the narrator forgot",
+          "To focus only on football"
+        ],
+        correct: 0,
+        explanation: "Mystery stories depend on delay, uncertainty, and gradual discovery."
+      },
+      {
+        category: "Theme",
+        question: "Which theme is most visible in this episode?",
+        answers: [
+          "Curiosity and the wish to discover the truth",
+          "The history of ancient Rome",
+          "The dangers of professional football",
+          "The beauty of supermarkets"
+        ],
+        correct: 0,
+        explanation: "Giacomo and Simona are driven by curiosity and by the feeling that the truth has not yet been found."
+      },
+      {
+        category: "Language Level",
+        question: "Why is the story suitable for A1–A2 learners?",
+        answers: [
+          "It uses a clear plot, short scenes, much dialogue, and familiar situations",
+          "It uses long philosophical essays",
+          "It avoids all action",
+          "It uses only legal terminology"
+        ],
+        correct: 0,
+        explanation: "The story uses accessible scenes and dialogue while still creating suspense."
+      },
+      {
+        category: "Interpretation",
+        question: "What makes Giacomo and Simona convincing young detectives?",
+        answers: [
+          "They are not professionals, but they notice details and ask questions",
+          "They already know the killer",
+          "They work for the police",
+          "They have magical powers"
+        ],
+        correct: 0,
+        explanation: "Their strength is curiosity, observation, and the courage to ask questions."
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let answered = false;
+    let userAnswers = [];
+
+    const startScreen = document.getElementById("startScreen");
+    const quizScreen = document.getElementById("quizScreen");
+    const endScreen = document.getElementById("endScreen");
+    const questionCounter = document.getElementById("questionCounter");
+    const scoreCounter = document.getElementById("scoreCounter");
+    const progressFill = document.getElementById("progressFill");
+    const categoryBadge = document.getElementById("categoryBadge");
+    const questionText = document.getElementById("questionText");
+    const answersBox = document.getElementById("answers");
+    const feedback = document.getElementById("feedback");
+    const feedbackTitle = document.getElementById("feedbackTitle");
+    const feedbackText = document.getElementById("feedbackText");
+    const nextButton = document.getElementById("nextButton");
+    const scoreBig = document.getElementById("scoreBig");
+    const finalMessage = document.getElementById("finalMessage");
+    const reviewList = document.getElementById("reviewList");
+
+    function startQuiz() {
+      startScreen.classList.add("hidden");
+      quizScreen.classList.remove("hidden");
+      showQuestion();
+    }
+
+    function showQuestion() {
+      answered = false;
+      const q = questions[currentQuestion];
+
+      categoryBadge.textContent = q.category;
+      questionCounter.textContent = "Question " + (currentQuestion + 1) + " of " + questions.length;
+      scoreCounter.textContent = "Score: " + score;
+      progressFill.style.width = ((currentQuestion) / questions.length * 100) + "%";
+      questionText.textContent = q.question;
+      answersBox.innerHTML = "";
+      feedback.style.display = "none";
+      nextButton.classList.add("hidden");
+
+      q.answers.forEach((answer, index) => {
+        const btn = document.createElement("button");
+        btn.className = "answer-btn";
+        btn.textContent = answer;
+        btn.onclick = () => chooseAnswer(index, btn);
+        answersBox.appendChild(btn);
+      });
+    }
+
+    function chooseAnswer(index, button) {
+      if (answered) return;
+      answered = true;
+
+      const q = questions[currentQuestion];
+      const allButtons = document.querySelectorAll(".answer-btn");
+      allButtons.forEach(btn => btn.disabled = true);
+
+      const isCorrect = index === q.correct;
+      userAnswers.push({
+        question: q.question,
+        chosen: q.answers[index],
+        correct: q.answers[q.correct],
+        isCorrect: isCorrect
+      });
+
+      if (isCorrect) {
+        score++;
+        button.classList.add("correct");
+        feedbackTitle.textContent = "Correct!";
+        feedbackText.textContent = q.explanation;
+      } else {
+        button.classList.add("wrong");
+        allButtons[q.correct].classList.add("correct");
+        feedbackTitle.textContent = "Not quite.";
+        feedbackText.textContent = "Correct answer: " + q.answers[q.correct] + ". " + q.explanation;
+      }
+
+      scoreCounter.textContent = "Score: " + score;
+      feedback.style.display = "block";
+      nextButton.textContent = currentQuestion === questions.length - 1 ? "Show result" : "Next question";
+      nextButton.classList.remove("hidden");
+      progressFill.style.width = ((currentQuestion + 1) / questions.length * 100) + "%";
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        showQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      quizScreen.classList.add("hidden");
+      endScreen.classList.remove("hidden");
+
+      const percentage = Math.round((score / questions.length) * 100);
+      scoreBig.textContent = score + " / " + questions.length + " (" + percentage + "%)";
+
+      if (percentage >= 90) {
+        finalMessage.textContent = "Excellent. You read not only the plot, but also the literary technique behind it.";
+      } else if (percentage >= 70) {
+        finalMessage.textContent = "Good work. You understood many important literary features of the episode.";
+      } else if (percentage >= 50) {
+        finalMessage.textContent = "A solid start. Read the episode again and pay attention to narration, clues, and character speech.";
+      } else {
+        finalMessage.textContent = "Try again after reviewing the story. Focus especially on suspense, dialogue, setting, and characterization.";
+      }
+
+      reviewList.innerHTML = "";
+      userAnswers.forEach((item, idx) => {
+        if (!item.isCorrect) {
+          const div = document.createElement("div");
+          div.className = "review-item";
+          div.innerHTML =
+            "<strong>Question " + (idx + 1) + ":</strong> " + item.question +
+            "<br>Your answer: " + item.chosen +
+            "<br>Correct answer: " + item.correct;
+          reviewList.appendChild(div);
+        }
+      });
+
+      if (reviewList.innerHTML === "") {
+        const div = document.createElement("div");
+        div.className = "review-item";
+        div.innerHTML = "<strong>Perfect!</strong> You answered every literary question correctly.";
+        reviewList.appendChild(div);
+      }
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      answered = false;
+      userAnswers = [];
+      endScreen.classList.add("hidden");
+      startScreen.classList.remove("hidden");
+      progressFill.style.width = "0%";
+    }
+  </script>
+</body>
+</html>
