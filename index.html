@@ -2,51 +2,94 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reading Corner Quizzes</title>
 
   <style>
+    :root {
+      --bg: #f6f1ea;
+      --surface: #ffffff;
+      --surface-soft: #fffaf4;
+      --primary: #9c3a3a;
+      --primary-dark: #7f2f2f;
+      --text: #2f2622;
+      --muted: #6d625c;
+      --border: #eadfd5;
+      --shadow: 0 10px 25px rgba(60, 35, 20, 0.08);
+      --shadow-hover: 0 14px 30px rgba(60, 35, 20, 0.12);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #f7f3ec;
-      color: #2b2118;
+      background: linear-gradient(to bottom, #f4ede5 0%, #f8f4ee 100%);
+      color: var(--text);
+      line-height: 1.6;
     }
 
     header {
-      background: #8b2f2f;
+      background: linear-gradient(135deg, #8f3333 0%, #a94444 100%);
       color: white;
-      padding: 45px 20px;
       text-align: center;
+      padding: 60px 20px 50px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
     }
 
     header h1 {
-      font-size: 48px;
       margin: 0;
-      letter-spacing: 1px;
+      font-size: 56px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
     }
 
     header p {
-      font-size: 20px;
-      margin-top: 12px;
+      margin: 14px auto 0;
+      font-size: 21px;
+      max-width: 760px;
+      opacity: 0.96;
     }
 
     main {
-      max-width: 1000px;
-      margin: 40px auto;
+      max-width: 1180px;
+      margin: 42px auto 60px;
       padding: 0 20px;
     }
 
+    .intro,
+    .note {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 30px 32px;
+      box-shadow: var(--shadow);
+    }
+
     .intro {
-      background: white;
-      padding: 30px;
       margin-bottom: 30px;
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .note {
+      margin-top: 34px;
+      background: var(--surface-soft);
     }
 
     h2 {
-      color: #8b2f2f;
       margin-top: 0;
+      margin-bottom: 14px;
+      color: var(--primary-dark);
+      font-size: 24px;
+    }
+
+    .intro p,
+    .note p {
+      margin: 10px 0;
+      color: var(--text);
+      font-size: 17px;
     }
 
     .language-grid {
@@ -56,47 +99,91 @@
     }
 
     .card {
-      background: white;
-      padding: 26px;
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .card h2 {
+      margin-bottom: 18px;
+      font-size: 28px;
     }
 
     .quiz-buttons {
-      margin-top: 18px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
 
     .button {
       display: inline-block;
-      background: #8b2f2f;
-      color: white;
-      padding: 12px 18px;
       text-decoration: none;
-      border-radius: 8px;
       text-align: center;
       font-weight: bold;
+      font-size: 15px;
+      padding: 13px 16px;
+      border-radius: 12px;
+      transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 6px 14px rgba(156, 58, 58, 0.14);
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button.primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .button.primary:hover {
+      background: #8e3434;
     }
 
     .button.secondary {
-      background: #4b3a34;
+      background: #efe4dc;
+      color: var(--primary-dark);
+      box-shadow: none;
+      border: 1px solid #e4d4c9;
     }
 
-    .note {
-      margin-top: 35px;
-      background: #fff7e8;
-      padding: 24px;
-      border-radius: 16px;
-      border-left: 6px solid #8b2f2f;
+    .button.secondary:hover {
+      background: #e7d8ce;
     }
 
     footer {
       text-align: center;
-      padding: 35px;
-      color: #777;
+      padding: 24px 20px 40px;
+      color: var(--muted);
       font-size: 14px;
+    }
+
+    @media (max-width: 700px) {
+      header {
+        padding: 48px 18px 40px;
+      }
+
+      header h1 {
+        font-size: 42px;
+      }
+
+      header p {
+        font-size: 18px;
+      }
+
+      .intro,
+      .note,
+      .card {
+        padding: 22px;
+      }
     }
   </style>
 </head>
@@ -109,26 +196,18 @@
   </header>
 
   <main>
-
     <section class="intro">
       <h2>Welcome to the Reading Corner Quiz Page</h2>
-      <p>
-        Choose a language and select one of the two quiz types.
-      </p>
-      <p>
-        <strong>General Story Quiz</strong> focuses on the plot, characters and important events.
-      </p>
-      <p>
-        <strong>Literary Studies</strong> focuses on narration, style, genre, literary devices and interpretation.
-      </p>
+      <p>Choose a language and select one of the two quiz types.</p>
+      <p><strong>General Story Quiz</strong> focuses on the plot, characters and important events.</p>
+      <p><strong>Literary Studies</strong> focuses on narration, style, genre, literary devices and interpretation.</p>
     </section>
 
     <section class="language-grid">
-
       <div class="card">
         <h2>English</h2>
         <div class="quiz-buttons">
-          <a class="button" href="#">General Story Quiz</a>
+          <a class="button primary" href="#">General Story Quiz</a>
           <a class="button secondary" href="#">Literary Studies</a>
         </div>
       </div>
@@ -136,7 +215,7 @@
       <div class="card">
         <h2>German</h2>
         <div class="quiz-buttons">
-          <a class="button" href="#">General Story Quiz</a>
+          <a class="button primary" href="#">General Story Quiz</a>
           <a class="button secondary" href="#">Literary Studies</a>
         </div>
       </div>
@@ -144,7 +223,7 @@
       <div class="card">
         <h2>Polish</h2>
         <div class="quiz-buttons">
-          <a class="button" href="#">General Story Quiz</a>
+          <a class="button primary" href="#">General Story Quiz</a>
           <a class="button secondary" href="#">Literary Studies</a>
         </div>
       </div>
@@ -152,7 +231,7 @@
       <div class="card">
         <h2>Italian</h2>
         <div class="quiz-buttons">
-          <a class="button" href="#">General Story Quiz</a>
+          <a class="button primary" href="#">General Story Quiz</a>
           <a class="button secondary" href="#">Literary Studies</a>
         </div>
       </div>
@@ -160,7 +239,7 @@
       <div class="card">
         <h2>Spanish</h2>
         <div class="quiz-buttons">
-          <a class="button" href="#">General Story Quiz</a>
+          <a class="button primary" href="#">General Story Quiz</a>
           <a class="button secondary" href="#">Literary Studies</a>
         </div>
       </div>
@@ -168,7 +247,7 @@
       <div class="card">
         <h2>French</h2>
         <div class="quiz-buttons">
-          <a class="button" href="#">General Story Quiz</a>
+          <a class="button primary" href="#">General Story Quiz</a>
           <a class="button secondary" href="#">Literary Studies</a>
         </div>
       </div>
@@ -176,20 +255,16 @@
       <div class="card">
         <h2>Chinese</h2>
         <div class="quiz-buttons">
-          <a class="button" href="#">General Story Quiz</a>
+          <a class="button primary" href="#">General Story Quiz</a>
           <a class="button secondary" href="#">Literary Studies</a>
         </div>
       </div>
-
     </section>
 
     <section class="note">
       <h2>More quizzes coming soon</h2>
-      <p>
-        New quizzes will be added step by step as new episodes are published.
-      </p>
+      <p>New quizzes will be added step by step as new episodes are published.</p>
     </section>
-
   </main>
 
   <footer>
