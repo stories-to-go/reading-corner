@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deutsch Strafrecht Quiz | Reading Corner</title>
+  <style>
+    :root { --soft:#fffaf4; --blue:#335c81; --blue-dark:#274967; --terracotta:#9c3b34; --text:#2f2a26; --muted:#6c625a; --border:#eadfce; --correct:#2f7d4f; --wrong:#b0443c; --shadow:0 14px 36px rgba(60,35,20,.12); --radius:22px; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Arial,sans-serif; background:linear-gradient(rgba(34,24,18,.30),rgba(34,24,18,.48)),url('cover.png.png') center/cover fixed no-repeat; color:var(--text); line-height:1.6; min-height:100vh; }
+    .page-overlay { min-height:100vh; background:linear-gradient(to bottom,rgba(247,241,232,.78),rgba(247,241,232,.94)); padding-bottom:36px; }
+    header { text-align:center; padding:46px 20px 28px; color:#fff; background:linear-gradient(135deg,rgba(39,73,103,.94),rgba(51,92,129,.92)); box-shadow:0 6px 22px rgba(0,0,0,.14); }
+    header .topline { text-transform:uppercase; letter-spacing:1.4px; font-size:14px; opacity:.92; margin-bottom:8px; }
+    header h1 { margin:0; font-size:44px; line-height:1.12; }
+    header p { margin:12px auto 0; max-width:840px; font-size:18px; opacity:.97; }
+    main { max-width:980px; margin:34px auto; padding:0 18px; }
+    .quiz-shell { background:rgba(255,255,255,.96); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; }
+    .start-screen,.question-screen,.end-screen { padding:34px; }
+    .badge { display:inline-block; background:#dfeaf4; color:var(--blue-dark); border:1px solid #c9d9e7; border-radius:999px; padding:7px 13px; font-weight:bold; font-size:13px; margin-bottom:16px; }
+    h2 { margin:0 0 16px; color:var(--blue-dark); font-size:32px; line-height:1.22; }
+    .lead { color:var(--muted); font-size:18px; margin-bottom:24px; }
+    .law-note { background:#f5f9fc; border:1px solid #d5e2ed; border-left:6px solid var(--blue); border-radius:16px; padding:18px; color:#435363; margin:22px 0; }
+    .info-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:26px 0; }
+    .info-card { background:var(--soft); border:1px solid var(--border); border-radius:16px; padding:16px; text-align:center; }
+    .info-card strong { display:block; color:var(--blue-dark); font-size:18px; margin-bottom:4px; }
+    .info-card span { color:var(--muted); font-size:14px; }
+    .progress-area { padding:24px 34px 0; }
+    .progress-top { display:flex; justify-content:space-between; align-items:center; color:var(--muted); font-weight:bold; margin-bottom:10px; font-size:14px; }
+    .progress-bar { height:12px; background:#efe4d8; border-radius:999px; overflow:hidden; border:1px solid #e3d4c3; }
+    .progress-fill { height:100%; width:0%; background:linear-gradient(90deg,var(--blue),var(--terracotta)); transition:width .25s ease; }
+    .question-text { font-size:25px; line-height:1.32; color:var(--text); margin:10px 0 24px; }
+    .answers { display:grid; gap:12px; margin-bottom:22px; }
+    .answer-btn { width:100%; text-align:left; background:#fffdf9; border:1px solid var(--border); border-radius:16px; padding:16px 18px; font-size:16px; color:var(--text); cursor:pointer; transition:transform .16s ease,background .16s ease,border .16s ease; }
+    .answer-btn:hover:not(:disabled) { transform:translateY(-2px); background:#f7efe4; border-color:#dcc9b7; }
+    .answer-btn:disabled { cursor:default; }
+    .answer-btn.correct { background:#e8f5ed; border-color:var(--correct); color:#1f5d3a; font-weight:bold; }
+    .answer-btn.wrong { background:#fff0ee; border-color:var(--wrong); color:#8f302a; font-weight:bold; }
+    .feedback { display:none; margin-top:18px; background:#f5f9fc; border-left:6px solid var(--blue); border-radius:14px; padding:18px; }
+    .feedback h3 { margin:0 0 8px; font-size:20px; }
+    .feedback p { margin:0; color:var(--muted); }
+    .button-row { display:flex; gap:12px; flex-wrap:wrap; margin-top:24px; }
+    button,.link-button { border:none; border-radius:14px; padding:14px 20px; font-size:16px; font-weight:bold; cursor:pointer; text-decoration:none; display:inline-block; transition:transform .16s ease,background .16s ease; }
+    button:hover,.link-button:hover { transform:translateY(-2px); }
+    .primary-action { background:var(--blue); color:#fff; }
+    .primary-action:hover { background:var(--blue-dark); }
+    .secondary-action { background:#fff2df; color:#7c2d28; border:1px solid #ead4b8; }
+    .secondary-action:hover { background:#f4e3cc; }
+    .hidden { display:none; }
+    .score-big { font-size:54px; font-weight:bold; color:var(--blue-dark); margin:12px 0; }
+    .result-box { background:var(--soft); border:1px solid var(--border); border-radius:18px; padding:24px; margin:22px 0; }
+    .review-list { margin-top:20px; display:grid; gap:12px; }
+    .review-item { background:#fffdf9; border:1px solid var(--border); border-radius:14px; padding:14px 16px; font-size:15px; }
+    .review-item strong { color:var(--blue-dark); }
+    footer { text-align:center; color:var(--muted); padding:12px 20px 34px; font-size:14px; }
+    @media (max-width:720px) { body { background-attachment:scroll; } header h1 { font-size:34px; } header p { font-size:16px; } .start-screen,.question-screen,.end-screen { padding:24px; } .progress-area { padding:20px 24px 0; } .question-text { font-size:21px; } .info-grid { grid-template-columns:1fr; } .score-big { font-size:42px; } }
+  </style>
+</head>
+<body>
+  <div class="page-overlay">
+    <header><div class="topline">Reading Corner · Deutsch · Strafrecht</div><h1>Become a Law Expert</h1><p>Geheimnis in der Tulpenstraße — Strafrechtliches Denken mit Bezug zur Story</p></header>
+    <main><section class="quiz-shell">
+      <div id="startScreen" class="start-screen">
+        <span class="badge">Deutsch · Strafrecht · 20 Fragen</span>
+        <h2>Denke wie in einer deutschen Strafrechts-AG.</h2>
+        <p class="lead">Dieses Quiz verlangt kein vollständiges Gutachten. Es übt aber zentrale Begriffe: objektiver Tatbestand, subjektiver Tatbestand, Äquivalenz, objektive Zurechnung, Vorsatz, Rechtswidrigkeit, Schuld und Indizien.</p>
+        <div class="law-note">Alle Fragen bleiben eng an der Story: Herr Cassis Tod, der stumpfe Gegenstand, Giacomos Beobachtungen, Frau Valle, Doktor Martinos Alibi, Herr Moreno und die Gartenszene.</div>
+        <div class="info-grid"><div class="info-card"><strong>20</strong><span>Strafrechtsfragen</span></div><div class="info-card"><strong>AG-Niveau</strong><span>aber ohne Schema-Zwang</span></div><div class="info-card"><strong>Latein</strong><span>wo es passt</span></div></div>
+        <div class="button-row"><button class="primary-action" onclick="startQuiz()">Law Quiz starten</button><a class="link-button secondary-action" href="index.html">Zurück zur Übersicht</a></div>
+      </div>
+      <div id="quizScreen" class="hidden">
+        <div class="progress-area"><div class="progress-top"><span id="questionCounter">Frage 1 von 20</span><span id="scoreCounter">Punkte: 0</span></div><div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div></div>
+        <div class="question-screen"><div class="badge" id="categoryBadge">Strafrecht</div><h2 id="questionText" class="question-text"></h2><div id="answers" class="answers"></div><div id="feedback" class="feedback"><h3 id="feedbackTitle"></h3><p id="feedbackText"></p></div><div class="button-row"><button id="nextButton" class="primary-action hidden" onclick="nextQuestion()">Nächste Frage</button></div></div>
+      </div>
+      <div id="endScreen" class="end-screen hidden">
+        <span class="badge">Quiz abgeschlossen</span><h2>Dein Ergebnis</h2><div id="scoreBig" class="score-big"></div><div class="result-box"><p id="finalMessage" class="lead"></p></div><div class="button-row"><button class="primary-action" onclick="restartQuiz()">Noch einmal versuchen</button><a class="link-button secondary-action" href="index.html">Zurück zur Übersicht</a></div><div id="reviewList" class="review-list"></div>
+      </div>
+    </section></main>
+    <footer>© 2026 Reading Corner — Stories to go</footer>
+  </div>
+  <script>
+    const questions = [
+      {
+            "category": "Objektiver Tatbestand",
+            "question": "Herr Cassi wurde mit einem stumpfen Gegenstand erschlagen. Welche Aussage zum objektiven Tatbestand ist am präzisesten?",
+            "answers": [
+                  "Der objektive Tatbestand wäre erfüllt, sobald Herr Cassi tot ist; Handlung und Kausalität spielen dann keine eigene Rolle mehr.",
+                  "Zum objektiven Tatbestand gehören insbesondere eine tatbestandsmäßige Handlung, der Tod eines Menschen und die Kausalität zwischen Handlung und Erfolg.",
+                  "Der objektive Tatbestand betrifft vor allem die innere Einstellung des Täters zur Tat.",
+                  "Beim objektiven Tatbestand geht es nur darum, ob die Polizei bereits einen Verdächtigen benannt hat."
+            ],
+            "correct": 1,
+            "explanation": "Beim Tötungsdelikt fragt man objektiv nach Handlung, Erfolg und Kausalität. Vorsatz gehört dagegen zum subjektiven Tatbestand."
+      },
+      {
+            "category": "Subjektiver Tatbestand",
+            "question": "Welche Frage gehört am ehesten zum subjektiven Tatbestand, wenn man den Tod von Herrn Cassi prüft?",
+            "answers": [
+                  "Ob der Schlag mit dem stumpfen Gegenstand den Tod tatsächlich verursacht hat.",
+                  "Ob Herr Cassi durch den Lärm Konflikte mit den Nachbarn hatte.",
+                  "Ob der Täter den Tod zumindest billigend in Kauf nahm.",
+                  "Ob Frau Valle den Körper am Morgen gefunden hat."
+            ],
+            "correct": 2,
+            "explanation": "Der subjektive Tatbestand fragt nach der inneren Seite der Tat, vor allem nach Vorsatz."
+      },
+      {
+            "category": "Äquivalenztheorie",
+            "question": "Wie würde man mit der Äquivalenztheorie den möglichen Schlag gegen Herrn Cassi prüfen?",
+            "answers": [
+                  "Man fragt, ob der Schlag nicht hinweggedacht werden kann, ohne dass der Tod in seiner konkreten Gestalt entfiele.",
+                  "Man fragt nur, ob der Schlag besonders brutal wirkt.",
+                  "Man fragt, ob Giacomo den Schlag für wahrscheinlich hält.",
+                  "Man fragt, ob der Schlag moralisch schlimmer ist als das laute Musikhören."
+            ],
+            "correct": 0,
+            "explanation": "Das ist die condicio-sine-qua-non-Formel: Eine Handlung ist kausal, wenn sie nicht hinweggedacht werden kann, ohne dass der Erfolg entfiele."
+      },
+      {
+            "category": "Objektive Zurechnung",
+            "question": "Warum würde man nach der Kausalität zusätzlich über objektive Zurechnung sprechen?",
+            "answers": [
+                  "Weil jede kausale Handlung automatisch strafbar ist.",
+                  "Weil objektive Zurechnung nur prüft, ob der Täter sympathisch wirkt.",
+                  "Weil der Tod auch dann zugerechnet wird, wenn sich kein rechtlich missbilligtes Risiko verwirklicht hat.",
+                  "Weil sich im Tod gerade ein durch die Handlung geschaffenes rechtlich missbilligtes Risiko verwirklicht haben muss."
+            ],
+            "correct": 3,
+            "explanation": "Kausalität allein genügt nicht immer. Zusätzlich fragt man, ob der Erfolg dem Täter normativ zugerechnet werden kann."
+      },
+      {
+            "category": "Dolus eventualis",
+            "question": "Angenommen, der Täter schlägt Herrn Cassi mit einem schweren Gegenstand gegen den Kopf und denkt: „Er könnte daran sterben, aber das ist mir egal.“ Welcher Begriff passt am besten?",
+            "answers": [
+                  "Bewusste Fahrlässigkeit, weil der Täter den Tod erkennt und trotzdem sicher auf dessen Ausbleiben vertraut.",
+                  "Dolus eventualis, weil der Täter den Tod für möglich hält und billigend in Kauf nimmt.",
+                  "Error in persona, weil der Täter den Gegenstand falsch verwendet.",
+                  "Aberratio ictus, weil der Täter seine innere Einstellung nicht erklären kann."
+            ],
+            "correct": 1,
+            "explanation": "Dolus eventualis meint bedingten Vorsatz: Der Täter hält den Erfolg für möglich und nimmt ihn hin."
+      },
+      {
+            "category": "Bewusste Fahrlässigkeit",
+            "question": "Was wäre der wichtigste Unterschied zwischen dolus eventualis und bewusster Fahrlässigkeit in einer Prüfung des Falls?",
+            "answers": [
+                  "Bei bewusster Fahrlässigkeit ist der Tod unmöglich.",
+                  "Bei dolus eventualis gibt es keine Kausalitätsprüfung.",
+                  "Bei bewusster Fahrlässigkeit erkennt der Täter die Gefahr, vertraut aber ernsthaft auf das Ausbleiben des Erfolgs.",
+                  "Bei dolus eventualis prüft man nur den objektiven Tatbestand."
+            ],
+            "correct": 2,
+            "explanation": "Der feine Unterschied liegt im inneren Umgang mit dem Risiko: Hinnehmen des Erfolgs oder ernsthaftes Vertrauen auf sein Ausbleiben."
+      },
+      {
+            "category": "Heimtücke",
+            "question": "Welche zusätzliche Information wäre besonders wichtig, wenn man im Fall von Herrn Cassi über Heimtücke nachdenken will?",
+            "answers": [
+                  "Ob Herr Cassi im Moment des Angriffs arg- und wehrlos war und der Täter das bewusst ausnutzte.",
+                  "Ob Herr Cassi höchstens fünfzig Jahre alt war.",
+                  "Ob der Hausverwalter vorher einen Brief geschrieben hatte.",
+                  "Ob Giacomo Herrn Cassi als seltsam empfand."
+            ],
+            "correct": 0,
+            "explanation": "Heimtücke setzt typischerweise das bewusste Ausnutzen von Arg- und Wehrlosigkeit voraus."
+      },
+      {
+            "category": "Niedrige Beweggründe",
+            "question": "Viele Nachbarn ärgern sich über Herrn Cassis laute Musik. Welche Bewertung ist strafrechtlich am saubersten?",
+            "answers": [
+                  "Jeder Ärger über Lärm ist automatisch ein niedriger Beweggrund.",
+                  "Ärger über Lärm kann ein Motiv sein, reicht aber allein nicht sicher für das Mordmerkmal niedrige Beweggründe.",
+                  "Wenn mehrere Nachbarn genervt sind, entfällt ein niedriger Beweggrund immer.",
+                  "Ein Motiv spielt im Strafrecht nur bei Diebstahl eine Rolle."
+            ],
+            "correct": 1,
+            "explanation": "Ein Motiv ist nicht automatisch ein Mordmerkmal. Niedrige Beweggründe verlangen eine besonders verwerfliche Motivation."
+      },
+      {
+            "category": "Tatmittel",
+            "question": "Warum ist der „stumpfe Gegenstand“ nicht nur ein Detail der Handlung, sondern strafrechtlich wichtig?",
+            "answers": [
+                  "Weil er zeigen kann, wie gefährlich die Handlung war und ob der Täter mit tödlichen Folgen rechnen musste.",
+                  "Weil jeder stumpfe Gegenstand automatisch ein Mordmerkmal begründet.",
+                  "Weil die Tat nur strafbar ist, wenn die Mordwaffe gefunden wird.",
+                  "Weil ein stumpfer Gegenstand den subjektiven Tatbestand immer ausschließt."
+            ],
+            "correct": 0,
+            "explanation": "Das Tatmittel kann Rückschlüsse auf Gefährlichkeit, Kausalität und Vorsatz ermöglichen."
+      },
+      {
+            "category": "Rechtswidrigkeit",
+            "question": "Welche Aussage zur Rechtswidrigkeit passt am besten zum bisherigen Stand der Story?",
+            "answers": [
+                  "Die Rechtswidrigkeit ist ausgeschlossen, weil Herr Cassi viele Nachbarn gestört hat.",
+                  "Die Rechtswidrigkeit ist ausgeschlossen, wenn Giacomo Herrn Moreno verdächtig findet.",
+                  "Die Rechtswidrigkeit wäre nur ausgeschlossen, wenn ein Rechtfertigungsgrund wie Notwehr vorläge.",
+                  "Rechtswidrigkeit prüft man nur, wenn die Polizei die Mordwaffe gefunden hat."
+            ],
+            "correct": 2,
+            "explanation": "Nach dem Tatbestand fragt man, ob ein Rechtfertigungsgrund vorliegt. Ärger über Lärm ist kein Rechtfertigungsgrund für eine Tötung."
+      },
+      {
+            "category": "Notwehr",
+            "question": "Welche Tatsache müsste vorliegen, damit man im Fall von Herrn Cassi ernsthaft über Notwehr sprechen könnte?",
+            "answers": [
+                  "Herr Cassi müsste durch seine Musik viele Nachbarn genervt haben.",
+                  "Herr Cassi müsste einen gegenwärtigen rechtswidrigen Angriff gegen den Täter geführt haben.",
+                  "Herr Cassi müsste im zweiten Stock gewohnt haben.",
+                  "Herr Cassi müsste den Hausverwalterbrief ignoriert haben."
+            ],
+            "correct": 1,
+            "explanation": "Notwehr setzt einen gegenwärtigen rechtswidrigen Angriff voraus. Die bisherige Story liefert dafür keinen sicheren Hinweis."
+      },
+      {
+            "category": "Schuld",
+            "question": "Welche Frage gehört eher zur Schuld als zum objektiven Tatbestand?",
+            "answers": [
+                  "Ob Herr Cassi tot ist.",
+                  "Ob ein Schlag kausal für den Tod war.",
+                  "Ob der Täter schuldfähig war und ihm die Tat persönlich vorwerfbar ist.",
+                  "Ob die Tür von Herrn Cassi offenstand."
+            ],
+            "correct": 2,
+            "explanation": "Schuld betrifft die persönliche Vorwerfbarkeit, nicht die äußere Tatbestandsverwirklichung."
+      },
+      {
+            "category": "Indizien",
+            "question": "Giacomo hört eine Tür und sieht später Herrn Cassis Tür offen. Wie ist diese Beobachtung am besten einzuordnen?",
+            "answers": [
+                  "Als unmittelbarer Tatnachweis gegen Herrn Moreno.",
+                  "Als Indiz, das Bedeutung gewinnen kann, aber für sich allein noch keinen Täter beweist.",
+                  "Als Geständnis des Täters.",
+                  "Als Rechtfertigungsgrund."
+            ],
+            "correct": 1,
+            "explanation": "Das ist ein mögliches Indiz. Es muss aber mit weiteren Tatsachen verbunden werden."
+      },
+      {
+            "category": "Verdacht und Beweis",
+            "question": "Giacomo hält Herrn Moreno für den Verdächtigsten. Was ist die wichtigste strafrechtliche Vorsicht?",
+            "answers": [
+                  "Ein starker Verdacht ersetzt die Prüfung von Tatbestand, Rechtswidrigkeit und Schuld.",
+                  "Ein Verdacht ist wertlos und darf nie berücksichtigt werden.",
+                  "Ein Verdacht kann Ermittlungen lenken, ist aber noch kein Tatnachweis.",
+                  "Ein Verdacht genügt, wenn die Figur unsympathisch wirkt."
+            ],
+            "correct": 2,
+            "explanation": "Verdacht kann ein Ermittlungsansatz sein, aber strafrechtlich braucht man konkrete Nachweise."
+      },
+      {
+            "category": "Alibi",
+            "question": "Doktor Martino sagt, er sei im Krankenhaus zur Nachtschicht gewesen. Wie sollte man diese Aussage strafrechtlich behandeln?",
+            "answers": [
+                  "Als mögliches Alibi, das überprüft werden muss.",
+                  "Als automatischen Freispruch ohne jede weitere Prüfung.",
+                  "Als Beweis seiner Schuld, weil er zu genau antwortet.",
+                  "Als Frage der objektiven Zurechnung."
+            ],
+            "correct": 0,
+            "explanation": "Ein Alibi kann die Tatgelegenheit ausschließen, muss aber durch Dienstpläne, Zeugen oder andere Fakten überprüft werden."
+      },
+      {
+            "category": "Zeugenaussage",
+            "question": "Frau Valle fand den Körper und redete mit Journalisten. Welche Aussage ist am treffendsten?",
+            "answers": [
+                  "Sie ist keine Zeugin, weil sie gern redet.",
+                  "Sie kann Zeugin zum Auffinden des Körpers sein, aber nicht automatisch zur Tat selbst.",
+                  "Sie beweist durch ihre Aussage sicher die Täterschaft.",
+                  "Ihre Aussage betrifft nur den subjektiven Tatbestand."
+            ],
+            "correct": 1,
+            "explanation": "Frau Valle kann berichten, was sie selbst wahrgenommen hat. Ob sie zuverlässig ist, ist eine weitere Frage."
+      },
+      {
+            "category": "Täterschaft und Teilnahme",
+            "question": "Giacomo sieht Frau Bianchi und Herrn Moreno im Garten, wie sie sich umarmen. Welche strafrechtliche Folgerung wäre zu weitgehend?",
+            "answers": [
+                  "Die Szene kann eine heimliche Beziehung oder Verbindung zwischen beiden andeuten.",
+                  "Die Szene kann die Verdachtslage komplizierter machen.",
+                  "Die Szene beweist ohne Weiteres Mittäterschaft oder Beihilfe.",
+                  "Die Szene kann ein mögliches Motiv oder eine Absprache nahelegen."
+            ],
+            "correct": 2,
+            "explanation": "Eine heimliche Begegnung ist verdächtig, beweist aber nicht automatisch Täterschaft, Mittäterschaft oder Teilnahme."
+      },
+      {
+            "category": "In dubio pro reo",
+            "question": "Nach allen Ermittlungen bleiben erhebliche Zweifel, ob Herr Moreno wirklich der Täter war. Welcher Grundsatz passt?",
+            "answers": [
+                  "In dubio pro reo.",
+                  "Pacta sunt servanda.",
+                  "Lex posterior derogat legi priori.",
+                  "Volenti non fit iniuria."
+            ],
+            "correct": 0,
+            "explanation": "In dubio pro reo bedeutet: Im Zweifel für den Angeklagten."
+      },
+      {
+            "category": "Nulla poena sine lege",
+            "question": "Was bedeutet nulla poena sine lege in einem Strafrechtsquiz zur Story?",
+            "answers": [
+                  "Eine Strafe darf nur auf Grundlage eines vorher bestehenden Gesetzes verhängt werden.",
+                  "Ein Täter darf bestraft werden, wenn die Nachbarn ihn verdächtig finden.",
+                  "Ein moralisch schlechtes Verhalten ist immer strafbar.",
+                  "Die Polizei darf nachträglich einen neuen Straftatbestand schaffen."
+            ],
+            "correct": 0,
+            "explanation": "Nulla poena sine lege heißt: Keine Strafe ohne Gesetz."
+      },
+      {
+            "category": "Gutachtenstil",
+            "question": "Welche Frage wäre in einer deutschen Strafrechts-AG am ehesten gutachterlich formuliert?",
+            "answers": [
+                  "Herr Moreno ist unsympathisch, also ist er Täter.",
+                  "Herr Moreno könnte sich wegen eines Tötungsdelikts strafbar gemacht haben, wenn er Herrn Cassi vorsätzlich und rechtswidrig getötet hat.",
+                  "Frau Bianchi hat schöne Augen, also ist sie weniger verdächtig.",
+                  "Giacomo glaubt an eine Nachbarspur, also ist die Prüfung beendet."
+            ],
+            "correct": 1,
+            "explanation": "Der Gutachtenstil beginnt mit einer Möglichkeit und prüft dann die Voraussetzungen."
+      }
+];
+    let currentQuestion = 0, score = 0, answered = false, userAnswers = [];
+    const startScreen = document.getElementById("startScreen"), quizScreen = document.getElementById("quizScreen"), endScreen = document.getElementById("endScreen");
+    const questionCounter = document.getElementById("questionCounter"), scoreCounter = document.getElementById("scoreCounter"), progressFill = document.getElementById("progressFill");
+    const categoryBadge = document.getElementById("categoryBadge"), questionText = document.getElementById("questionText"), answersBox = document.getElementById("answers");
+    const feedback = document.getElementById("feedback"), feedbackTitle = document.getElementById("feedbackTitle"), feedbackText = document.getElementById("feedbackText"), nextButton = document.getElementById("nextButton");
+    const scoreBig = document.getElementById("scoreBig"), finalMessage = document.getElementById("finalMessage"), reviewList = document.getElementById("reviewList");
+    function startQuiz() { startScreen.classList.add("hidden"); quizScreen.classList.remove("hidden"); showQuestion(); }
+    function showQuestion() { answered=false; const q=questions[currentQuestion]; categoryBadge.textContent=q.category; questionCounter.textContent="Frage "+(currentQuestion+1)+" von "+questions.length; scoreCounter.textContent="Punkte: "+score; progressFill.style.width=((currentQuestion)/questions.length*100)+"%"; questionText.textContent=q.question; answersBox.innerHTML=""; feedback.style.display="none"; nextButton.classList.add("hidden"); q.answers.forEach((answer,index)=>{ const btn=document.createElement("button"); btn.className="answer-btn"; btn.textContent=answer; btn.onclick=()=>chooseAnswer(index,btn); answersBox.appendChild(btn); }); }
+    function chooseAnswer(index,button) { if(answered) return; answered=true; const q=questions[currentQuestion]; const allButtons=document.querySelectorAll(".answer-btn"); allButtons.forEach(btn=>btn.disabled=true); const isCorrect=index===q.correct; userAnswers.push({question:q.question, chosen:q.answers[index], correct:q.answers[q.correct], isCorrect:isCorrect}); if(isCorrect){ score++; button.classList.add("correct"); feedbackTitle.textContent="Richtig!"; feedbackText.textContent=q.explanation; } else { button.classList.add("wrong"); allButtons[q.correct].classList.add("correct"); feedbackTitle.textContent="Nicht ganz."; feedbackText.textContent="Richtige Antwort: "+q.answers[q.correct]+" "+q.explanation; } scoreCounter.textContent="Punkte: "+score; feedback.style.display="block"; nextButton.textContent=currentQuestion===questions.length-1?"Ergebnis anzeigen":"Nächste Frage"; nextButton.classList.remove("hidden"); progressFill.style.width=((currentQuestion+1)/questions.length*100)+"%"; }
+    function nextQuestion() { currentQuestion++; if(currentQuestion<questions.length) showQuestion(); else showResult(); }
+    function showResult() { quizScreen.classList.add("hidden"); endScreen.classList.remove("hidden"); const percentage=Math.round((score/questions.length)*100); scoreBig.textContent=score+" / "+questions.length+" ("+percentage+"%)"; if(percentage>=90) finalMessage.textContent="Ausgezeichnet. Du verstehst bereits zentrale strafrechtliche Begriffe und kannst sie auf die Story anwenden."; else if(percentage>=70) finalMessage.textContent="Sehr gut. Du erkennst Tatbestand, Kausalität, Vorsatz, Indizien und Verdacht schon ziemlich sicher."; else if(percentage>=50) finalMessage.textContent="Solider Anfang. Wiederhole besonders objektiven Tatbestand, subjektiven Tatbestand, Kausalität und Rechtswidrigkeit."; else finalMessage.textContent="Versuche es noch einmal. Achte darauf, Verdacht, Beweis, Tatbestand, Rechtswidrigkeit und Schuld sauber zu trennen."; reviewList.innerHTML=""; userAnswers.forEach((item,idx)=>{ if(!item.isCorrect){ const div=document.createElement("div"); div.className="review-item"; div.innerHTML="<strong>Frage "+(idx+1)+":</strong> "+item.question+"<br>Deine Antwort: "+item.chosen+"<br>Richtige Antwort: "+item.correct; reviewList.appendChild(div); } }); if(reviewList.innerHTML===""){ const div=document.createElement("div"); div.className="review-item"; div.innerHTML="<strong>Perfekt!</strong> Du hast alle Strafrechtsfragen richtig beantwortet."; reviewList.appendChild(div); } }
+    function restartQuiz() { currentQuestion=0; score=0; answered=false; userAnswers=[]; endScreen.classList.add("hidden"); startScreen.classList.remove("hidden"); progressFill.style.width="0%"; }
+  </script>
+</body>
+</html>
