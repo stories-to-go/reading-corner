@@ -70,7 +70,7 @@
           <div class="info-grid">
             <div class="info-card"><strong>20</strong><span>Fragen</span></div>
             <div class="info-card"><strong>schwieriger</strong><span>als ein normales Quiz</span></div>
-            <div class="info-card"><strong>sofort</strong><span>Feedback</span></div>
+            <div class="info-card"><strong>gemischt</strong><span>Antworten A–D</span></div>
           </div>
           <div class="button-row">
             <button class="primary-action" onclick="startQuiz()">Quiz starten</button>
@@ -79,10 +79,7 @@
         </div>
         <div id="quizScreen" class="hidden">
           <div class="progress-area">
-            <div class="progress-top">
-              <span id="questionCounter">Frage 1 von 20</span>
-              <span id="scoreCounter">Punkte: 0</span>
-            </div>
+            <div class="progress-top"><span id="questionCounter">Frage 1 von 20</span><span id="scoreCounter">Punkte: 0</span></div>
             <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
           </div>
           <div class="question-screen">
@@ -98,10 +95,7 @@
           <h2>Dein Ergebnis</h2>
           <div id="scoreBig" class="score-big"></div>
           <div class="result-box"><p id="finalMessage" class="lead"></p></div>
-          <div class="button-row">
-            <button class="primary-action" onclick="restartQuiz()">Noch einmal versuchen</button>
-            <a class="link-button secondary-action" href="index.html">Zurück zur Übersicht</a>
-          </div>
+          <div class="button-row"><button class="primary-action" onclick="restartQuiz()">Noch einmal versuchen</button><a class="link-button secondary-action" href="index.html">Zurück zur Übersicht</a></div>
           <div id="reviewList" class="review-list"></div>
         </div>
       </section>
@@ -109,150 +103,7 @@
     <footer>© 2026 Reading Corner — Stories to go</footer>
   </div>
   <script>
-    
-const questions = [
-  {
-    category: "Anfang",
-    question: "Warum kommt Giacomo am Freitagabend mit dem Fahrrad nach Hause?",
-    answers: ["Er kommt vom Fußballtraining zurück.", "Er hat im Supermarkt Kaffee gekauft.", "Er hat Frau Valle besucht.", "Er war im Krankenhaus bei Doktor Martino."],
-    correct: 0,
-    explanation: "Giacomo geht jeden Dienstag und Freitag zum Fußballtraining und fährt mit dem Fahrrad hin und zurück."
-  },
-  {
-    category: "Simona",
-    question: "Was erfährt man über Simona, bevor die beiden die Treppe hinaufgehen?",
-    answers: ["Sie hat Kaffee gekauft, weil ihre Mutter ihn vergessen hatte.", "Sie hat Herrn Cassi besucht.", "Sie kommt gerade vom Meer zurück.", "Sie sucht ihren kleinen Bruder Federico."],
-    correct: 0,
-    explanation: "Simona sagt, dass sie im Supermarkt Kaffee gekauft hat, weil ihre Mutter ihn vergessen hatte."
-  },
-  {
-    category: "Aufzug",
-    question: "Welche kleine Alltagssituation führt dazu, dass Giacomo und Simona vor Herrn Cassis Wohnung vorbeikommen?",
-    answers: ["Der Aufzug ist außer Betrieb.", "Frau Valle ruft sie zu sich.", "Die Polizei sperrt das Treppenhaus.", "Herr Cassi bittet sie um Hilfe."],
-    correct: 0,
-    explanation: "Weil der Aufzug kaputt ist, müssen sie die Treppe nehmen und kommen an Herrn Cassis Wohnung vorbei."
-  },
-  {
-    category: "Herr Cassi",
-    question: "Was passt am besten zu Giacomos erster Beschreibung von Herrn Cassi?",
-    answers: ["Er wirkt grau, ernst und nicht wie jemand, der je jung gewesen ist.", "Er wirkt fröhlich, sportlich und sehr gesprächig.", "Er wirkt reich, elegant und immer freundlich.", "Er wirkt wie ein enger Freund von Giacomos Familie."],
-    correct: 0,
-    explanation: "Giacomo denkt an einen kleinen, dünnen Mann mit grauem Gesicht und sagt scherzhaft, er sehe aus wie jemand, der nie jung war."
-  },
-  {
-    category: "Musik",
-    question: "Warum ist die laute Musik erzählerisch wichtig?",
-    answers: ["Sie macht Herrn Cassi zum Mittelpunkt eines Konflikts im Haus.", "Sie zeigt, dass Simona Musikunterricht nimmt.", "Sie beweist sofort, wer der Mörder ist.", "Sie erklärt, warum Doktor Martino im Krankenhaus ist."],
-    correct: 0,
-    explanation: "Viele Nachbarn beschweren sich über den Lärm; dadurch entsteht ein möglicher Konflikt um Herrn Cassi."
-  },
-  {
-    category: "Fahrrad",
-    question: "Warum schickt Giacomos Vater ihn nach dem Abendessen wieder nach unten?",
-    answers: ["Giacomo soll sein Fahrrad vom Eingang wegbringen.", "Giacomo soll Herrn Cassi um Ruhe bitten.", "Giacomo soll Simona Kaffee bringen.", "Giacomo soll Frau Valle zur Polizei begleiten."],
-    correct: 0,
-    explanation: "Der Vater erinnert ihn daran, dass sich die Nachbarn über Fahrräder und Motorräder beim Eingang beschweren."
-  },
-  {
-    category: "Hinweis",
-    question: "Welche Beobachtung macht Giacomo, nachdem er sein Fahrrad in die Garage gebracht hat?",
-    answers: ["Er hört eine Tür und sieht danach Herrn Cassis Tür offen.", "Er sieht Frau Bianchi im Garten.", "Er findet eine Mordwaffe neben dem Eingangstor.", "Er trifft Doktor Martino im Treppenhaus."],
-    correct: 0,
-    explanation: "In der Stille hört Giacomo eine Tür, die sich öffnet und schließt, und sieht dann Herrn Cassis Tür offen."
-  },
-  {
-    category: "Samstagmorgen",
-    question: "Warum kann Giacomo am Samstag eigentlich länger schlafen?",
-    answers: ["Weil die Lehrer streiken und er nicht zur Schule geht.", "Weil er keine Hausaufgaben hat.", "Weil seine Eltern verreist sind.", "Weil Fußballtraining ausfällt."],
-    correct: 0,
-    explanation: "Am Samstag geht Giacomo nicht zur Schule, weil die Lehrer streiken."
-  },
-  {
-    category: "Nachricht",
-    question: "Was ist das Entscheidende an der Nachricht, die Giacomos Mutter ihm bringt?",
-    answers: ["Herr Cassi ist tot und man sagt, er sei ermordet worden.", "Herr Cassi ist nach Spanien gezogen.", "Herr Cassi hat den Hausverwalter verklagt.", "Herr Cassi hat sich bei allen Nachbarn entschuldigt."],
-    correct: 0,
-    explanation: "Die Mutter sagt, dass Herr Cassi tot ist und dass man sagt, er sei ermordet worden."
-  },
-  {
-    category: "Polizei",
-    question: "Wie reagiert der jüngere Polizist auf Giacomos Hinweis mit der Tür?",
-    answers: ["Er sagt, es könne auch die Tür einer anderen Wohnung gewesen sein.", "Er verhaftet sofort Herrn Moreno.", "Er glaubt Giacomo ohne jede Einschränkung.", "Er fragt nur nach dem Fußballtraining."],
-    correct: 0,
-    explanation: "Der Polizist relativiert Giacomos Beobachtung: Das Geräusch kann auch von einer anderen Wohnung gekommen sein."
-  },
-  {
-    category: "Ermittlungen",
-    question: "Welche Spur wollen die Polizisten zunächst verfolgen?",
-    answers: ["Die Bekanntschaften und zwielichtigen Freunde von Herrn Cassi.", "Die Beziehung zwischen Simona und Giacomo.", "Die Frage, wer Kaffee gekauft hat.", "Die kaputte Aufzugtür."],
-    correct: 0,
-    explanation: "Die Polizisten sprechen davon, der Spur der Bekanntschaften von Herrn Cassi zu folgen."
-  },
-  {
-    category: "Frau Valle",
-    question: "Warum ist Frau Valle als Figur für die Handlung wichtig?",
-    answers: ["Sie beobachtet die Nachbarn, findet Herrn Cassi und redet später mit Journalisten.", "Sie ist die Frau von Doktor Martino.", "Sie repariert den Aufzug.", "Sie versteckt die Mordwaffe im Garten."],
-    correct: 0,
-    explanation: "Frau Valle beobachtet die Nachbarn, findet den Körper und tritt dann gern vor den Journalisten auf."
-  },
-  {
-    category: "Giacomos Reaktion",
-    question: "Warum ist Giacomo am Samstagmittag wütend?",
-    answers: ["Er glaubt, die Polizei nehme seine Beobachtung mit der Tür nicht ernst genug.", "Er darf nicht zum Fußballtraining gehen.", "Simona will nicht mit ihm sprechen.", "Frau Bianchi gibt ihm keinen Zucker."],
-    correct: 0,
-    explanation: "Giacomo denkt, die Polizei glaube ihm vielleicht nicht und halte seine Geschichte für erfunden."
-  },
-  {
-    category: "Simona und Giacomo",
-    question: "Was ist Simonas erste vernünftige Reaktion, als Giacomo sagt, ein Nachbar könne der Täter sein?",
-    answers: ["Sie sagt, er habe es der Polizei gesagt und jetzt sei die Polizei dran.", "Sie will sofort alle Nachbarn verhaften.", "Sie glaubt sofort, dass Frau Valle schuldig ist.", "Sie rennt direkt zu Herrn Moreno."],
-    correct: 0,
-    explanation: "Simona reagiert zunächst nüchtern: Giacomo hat es der Polizei gesagt, also ist es eigentlich deren Aufgabe."
-  },
-  {
-    category: "Plan",
-    question: "Warum fragen Giacomo und Simona bei den Nachbarn nach Zucker?",
-    answers: ["Die Ausrede soll ihnen ermöglichen, in die Wohnungen zu kommen und mit den Nachbarn zu sprechen.", "Sie wollen wirklich sofort einen Kuchen backen.", "Sie wollen testen, wer den besten Zucker besitzt.", "Sie sammeln Zutaten für Frau Valle."],
-    correct: 0,
-    explanation: "Der Zucker ist nur eine Ausrede, damit sie die Wohnungen betreten und Fragen stellen können."
-  },
-  {
-    category: "Verdacht",
-    question: "Warum schließt Giacomo Frau Valle vorläufig als Verdächtige aus?",
-    answers: ["Sie redet zu viel und wirkt körperlich zu schwach für die Tat.", "Sie war die ganze Nacht im Krankenhaus.", "Sie ist mit ihrem Sohn am Meer.", "Sie ist Giacomos Großmutter."],
-    correct: 0,
-    explanation: "Giacomo meint, Frau Valle rede zu viel und wiege höchstens fünfzig Kilo; für die Tat brauche man Kraft."
-  },
-  {
-    category: "Doktor Martino",
-    question: "Was sagt Doktor Martino über den Abend des Mordes?",
-    answers: ["Er sei im Krankenhaus zur Nachtschicht gewesen.", "Er sei bei Frau Bianchi gewesen.", "Er habe mit Herrn Moreno im Garten gesprochen.", "Er habe Herrn Cassi besucht."],
-    correct: 0,
-    explanation: "Doktor Martino sagt, er sei gestern nicht zu Hause gewesen, sondern im Krankenhaus zur Nachtschicht."
-  },
-  {
-    category: "Frau Bianchi",
-    question: "Welche Information über Frau Bianchis Wohnung wird im Gespräch wichtig?",
-    answers: ["Die Wohnung geht zum Innenhof, weil sie Lärm nicht erträgt.", "Die Wohnung liegt direkt neben dem Supermarkt.", "Die Wohnung ist völlig unordentlich.", "Die Wohnung gehört Herrn Cassi."],
-    correct: 0,
-    explanation: "Frau Bianchi sagt, sie und ihr Mann wollten eine Wohnung zum Innenhof, weil sie Lärm nicht erträgt."
-  },
-  {
-    category: "Herr Moreno",
-    question: "Was macht Herrn Moreno für Simona besonders beunruhigend?",
-    answers: ["Er reagiert ernst, als Giacomo sagt, er sei so etwas wie ein Zeuge.", "Er weigert sich, ihnen Zucker zu geben.", "Er behauptet, Herr Cassi sei nie laut gewesen.", "Er sagt, er sei am Meer gewesen."],
-    correct: 0,
-    explanation: "Simona sagt später, Herr Moreno habe eher besorgt gewirkt und ihr Angst gemacht."
-  },
-  {
-    category: "Ende der Episode",
-    question: "Was beobachtet Giacomo später im Garten, das den Verdacht komplizierter macht?",
-    answers: ["Frau Bianchi und Herr Moreno treffen sich heimlich und umarmen sich.", "Frau Valle versteckt einen stumpfen Gegenstand.", "Doktor Martino steigt aus einem Polizeiauto.", "Frau Villa kommt mit ihrem Sohn aus dem Urlaub zurück."],
-    correct: 0,
-    explanation: "Giacomo sieht im Garten Frau Bianchi und Herrn Moreno zusammen; sie umarmen sich und sprechen leise."
-  }
-];
-
+    const questions = [{'category': 'Anfang', 'question': 'Warum kommt Giacomo am Freitagabend mit dem Fahrrad nach Hause?', 'answers': ['Er hat im Supermarkt Kaffee gekauft.', 'Er kommt vom Fußballtraining zurück.', 'Er hat Frau Valle besucht.', 'Er war im Krankenhaus bei Doktor Martino.'], 'correct': 1, 'explanation': 'Giacomo geht jeden Dienstag und Freitag zum Fußballtraining und fährt mit dem Fahrrad hin und zurück.'}, {'category': 'Simona', 'question': 'Was erfährt man über Simona, bevor die beiden die Treppe hinaufgehen?', 'answers': ['Sie sucht ihren kleinen Bruder Federico.', 'Sie kommt gerade vom Meer zurück.', 'Sie hat Kaffee gekauft, weil ihre Mutter ihn vergessen hatte.', 'Sie hat Herrn Cassi besucht.'], 'correct': 2, 'explanation': 'Simona sagt, dass sie im Supermarkt Kaffee gekauft hat, weil ihre Mutter ihn vergessen hatte.'}, {'category': 'Aufzug', 'question': 'Welche kleine Alltagssituation führt dazu, dass Giacomo und Simona vor Herrn Cassis Wohnung vorbeikommen?', 'answers': ['Die Polizei sperrt das Treppenhaus.', 'Herr Cassi bittet sie um Hilfe.', 'Der Aufzug ist außer Betrieb.', 'Frau Valle ruft sie zu sich.'], 'correct': 2, 'explanation': 'Weil der Aufzug kaputt ist, müssen sie die Treppe nehmen und kommen an Herrn Cassis Wohnung vorbei.'}, {'category': 'Herr Cassi', 'question': 'Was passt am besten zu Giacomos erster Beschreibung von Herrn Cassi?', 'answers': ['Er wirkt fröhlich, sportlich und sehr gesprächig.', 'Er wirkt wie ein enger Freund von Giacomos Familie.', 'Er wirkt grau, ernst und nicht wie jemand, der je jung gewesen ist.', 'Er wirkt reich, elegant und immer freundlich.'], 'correct': 2, 'explanation': 'Giacomo denkt an einen kleinen, dünnen Mann mit grauem Gesicht und sagt scherzhaft, er sehe aus wie jemand, der nie jung war.'}, {'category': 'Musik', 'question': 'Warum ist die laute Musik erzählerisch wichtig?', 'answers': ['Sie erklärt, warum Doktor Martino im Krankenhaus ist.', 'Sie macht Herrn Cassi zum Mittelpunkt eines Konflikts im Haus.', 'Sie beweist sofort, wer der Mörder ist.', 'Sie zeigt, dass Simona Musikunterricht nimmt.'], 'correct': 1, 'explanation': 'Viele Nachbarn beschweren sich über den Lärm; dadurch entsteht ein möglicher Konflikt um Herrn Cassi.'}, {'category': 'Fahrrad', 'question': 'Warum schickt Giacomos Vater ihn nach dem Abendessen wieder nach unten?', 'answers': ['Giacomo soll Simona Kaffee bringen.', 'Giacomo soll Herrn Cassi um Ruhe bitten.', 'Giacomo soll sein Fahrrad vom Eingang wegbringen.', 'Giacomo soll Frau Valle zur Polizei begleiten.'], 'correct': 2, 'explanation': 'Der Vater erinnert ihn daran, dass sich die Nachbarn über Fahrräder und Motorräder beim Eingang beschweren.'}, {'category': 'Hinweis', 'question': 'Welche Beobachtung macht Giacomo, nachdem er sein Fahrrad in die Garage gebracht hat?', 'answers': ['Er findet eine Mordwaffe neben dem Eingangstor.', 'Er hört eine Tür und sieht danach Herrn Cassis Tür offen.', 'Er trifft Doktor Martino im Treppenhaus.', 'Er sieht Frau Bianchi im Garten.'], 'correct': 1, 'explanation': 'In der Stille hört Giacomo eine Tür, die sich öffnet und schließt, und sieht dann Herrn Cassis Tür offen.'}, {'category': 'Samstagmorgen', 'question': 'Warum kann Giacomo am Samstag eigentlich länger schlafen?', 'answers': ['Weil seine Eltern verreist sind.', 'Weil Fußballtraining ausfällt.', 'Weil die Lehrer streiken und er nicht zur Schule geht.', 'Weil er keine Hausaufgaben hat.'], 'correct': 2, 'explanation': 'Am Samstag geht Giacomo nicht zur Schule, weil die Lehrer streiken.'}, {'category': 'Nachricht', 'question': 'Was ist das Entscheidende an der Nachricht, die Giacomos Mutter ihm bringt?', 'answers': ['Herr Cassi hat den Hausverwalter verklagt.', 'Herr Cassi ist tot und man sagt, er sei ermordet worden.', 'Herr Cassi hat sich bei allen Nachbarn entschuldigt.', 'Herr Cassi ist nach Spanien gezogen.'], 'correct': 1, 'explanation': 'Die Mutter sagt, dass Herr Cassi tot ist und dass man sagt, er sei ermordet worden.'}, {'category': 'Polizei', 'question': 'Wie reagiert der jüngere Polizist auf Giacomos Hinweis mit der Tür?', 'answers': ['Er fragt nur nach dem Fußballtraining.', 'Er glaubt Giacomo ohne jede Einschränkung.', 'Er sagt, es könne auch die Tür einer anderen Wohnung gewesen sein.', 'Er verhaftet sofort Herrn Moreno.'], 'correct': 2, 'explanation': 'Der Polizist relativiert Giacomos Beobachtung: Das Geräusch kann auch von einer anderen Wohnung gekommen sein.'}, {'category': 'Ermittlungen', 'question': 'Welche Spur wollen die Polizisten zunächst verfolgen?', 'answers': ['Die Beziehung zwischen Simona und Giacomo.', 'Die Bekanntschaften und zwielichtigen Freunde von Herrn Cassi.', 'Die kaputte Aufzugtür.', 'Die Frage, wer Kaffee gekauft hat.'], 'correct': 1, 'explanation': 'Die Polizisten sprechen davon, der Spur der Bekanntschaften von Herrn Cassi zu folgen.'}, {'category': 'Frau Valle', 'question': 'Warum ist Frau Valle als Figur für die Handlung wichtig?', 'answers': ['Sie repariert den Aufzug.', 'Sie ist die Frau von Doktor Martino.', 'Sie beobachtet die Nachbarn, findet Herrn Cassi und redet später mit Journalisten.', 'Sie versteckt die Mordwaffe im Garten.'], 'correct': 2, 'explanation': 'Frau Valle beobachtet die Nachbarn, findet den Körper und tritt dann gern vor den Journalisten auf.'}, {'category': 'Giacomos Reaktion', 'question': 'Warum ist Giacomo am Samstagmittag wütend?', 'answers': ['Er darf nicht zum Fußballtraining gehen.', 'Frau Bianchi gibt ihm keinen Zucker.', 'Er glaubt, die Polizei nehme seine Beobachtung mit der Tür nicht ernst genug.', 'Simona will nicht mit ihm sprechen.'], 'correct': 2, 'explanation': 'Giacomo denkt, die Polizei glaube ihm vielleicht nicht und halte seine Geschichte für erfunden.'}, {'category': 'Simona und Giacomo', 'question': 'Was ist Simonas erste vernünftige Reaktion, als Giacomo sagt, ein Nachbar könne der Täter sein?', 'answers': ['Sie glaubt sofort, dass Frau Valle schuldig ist.', 'Sie sagt, er habe es der Polizei gesagt und jetzt sei die Polizei dran.', 'Sie rennt direkt zu Herrn Moreno.', 'Sie will sofort alle Nachbarn verhaften.'], 'correct': 1, 'explanation': 'Simona reagiert zunächst nüchtern: Giacomo hat es der Polizei gesagt, also ist es eigentlich deren Aufgabe.'}, {'category': 'Plan', 'question': 'Warum fragen Giacomo und Simona bei den Nachbarn nach Zucker?', 'answers': ['Sie wollen wirklich sofort einen Kuchen backen.', 'Sie sammeln Zutaten für Frau Valle.', 'Die Ausrede soll ihnen ermöglichen, in die Wohnungen zu kommen und mit den Nachbarn zu sprechen.', 'Sie wollen testen, wer den besten Zucker besitzt.'], 'correct': 2, 'explanation': 'Der Zucker ist nur eine Ausrede, damit sie die Wohnungen betreten und Fragen stellen können.'}, {'category': 'Verdacht', 'question': 'Warum schließt Giacomo Frau Valle vorläufig als Verdächtige aus?', 'answers': ['Sie ist mit ihrem Sohn am Meer.', 'Sie redet zu viel und wirkt körperlich zu schwach für die Tat.', 'Sie ist Giacomos Großmutter.', 'Sie war die ganze Nacht im Krankenhaus.'], 'correct': 1, 'explanation': 'Giacomo meint, Frau Valle rede zu viel und wiege höchstens fünfzig Kilo; für die Tat brauche man Kraft.'}, {'category': 'Doktor Martino', 'question': 'Was sagt Doktor Martino über den Abend des Mordes?', 'answers': ['Er habe mit Herrn Moreno im Garten gesprochen.', 'Er sei bei Frau Bianchi gewesen.', 'Er sei im Krankenhaus zur Nachtschicht gewesen.', 'Er habe Herrn Cassi besucht.'], 'correct': 2, 'explanation': 'Doktor Martino sagt, er sei gestern nicht zu Hause gewesen, sondern im Krankenhaus zur Nachtschicht.'}, {'category': 'Frau Bianchi', 'question': 'Welche Information über Frau Bianchis Wohnung wird im Gespräch wichtig?', 'answers': ['Die Wohnung ist völlig unordentlich.', 'Die Wohnung gehört Herrn Cassi.', 'Die Wohnung geht zum Innenhof, weil sie Lärm nicht erträgt.', 'Die Wohnung liegt direkt neben dem Supermarkt.'], 'correct': 2, 'explanation': 'Frau Bianchi sagt, sie und ihr Mann wollten eine Wohnung zum Innenhof, weil sie Lärm nicht erträgt.'}, {'category': 'Herr Moreno', 'question': 'Was macht Herrn Moreno für Simona besonders beunruhigend?', 'answers': ['Er behauptet, Herr Cassi sei nie laut gewesen.', 'Er reagiert ernst, als Giacomo sagt, er sei so etwas wie ein Zeuge.', 'Er sagt, er sei am Meer gewesen.', 'Er weigert sich, ihnen Zucker zu geben.'], 'correct': 1, 'explanation': 'Simona sagt später, Herr Moreno habe eher besorgt gewirkt und ihr Angst gemacht.'}, {'category': 'Ende der Episode', 'question': 'Was beobachtet Giacomo später im Garten, das den Verdacht komplizierter macht?', 'answers': ['Doktor Martino steigt aus einem Polizeiauto.', 'Frau Valle versteckt einen stumpfen Gegenstand.', 'Frau Bianchi und Herr Moreno treffen sich heimlich und umarmen sich.', 'Frau Villa kommt mit ihrem Sohn aus dem Urlaub zurück.'], 'correct': 2, 'explanation': 'Giacomo sieht im Garten Frau Bianchi und Herrn Moreno zusammen; sie umarmen sich und sprechen leise.'}];
     let currentQuestion = 0, score = 0, answered = false, userAnswers = [];
     const startScreen = document.getElementById("startScreen");
     const quizScreen = document.getElementById("quizScreen");
