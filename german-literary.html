@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deutsch Literaturquiz | Reading Corner</title>
+  <style>
+    :root { --soft:#fffaf4; --green:#6f8f4e; --green-dark:#5f7c43; --terracotta:#9c3b34; --text:#2f2a26; --muted:#6c625a; --border:#eadfce; --correct:#2f7d4f; --wrong:#b0443c; --shadow:0 14px 36px rgba(60,35,20,.12); --radius:22px; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Arial,sans-serif; background:linear-gradient(rgba(34,24,18,.30),rgba(34,24,18,.48)),url('cover.png.png') center/cover fixed no-repeat; color:var(--text); line-height:1.6; min-height:100vh; }
+    .page-overlay { min-height:100vh; background:linear-gradient(to bottom,rgba(247,241,232,.78),rgba(247,241,232,.94)); padding-bottom:36px; }
+    header { text-align:center; padding:46px 20px 28px; color:#fff; background:linear-gradient(135deg,rgba(63,82,33,.93),rgba(111,143,78,.92)); box-shadow:0 6px 22px rgba(0,0,0,.14); }
+    header .topline { text-transform:uppercase; letter-spacing:1.4px; font-size:14px; opacity:.92; margin-bottom:8px; }
+    header h1 { margin:0; font-size:44px; line-height:1.12; }
+    header p { margin:12px auto 0; max-width:820px; font-size:18px; opacity:.97; }
+    main { max-width:960px; margin:34px auto; padding:0 18px; }
+    .quiz-shell { background:rgba(255,255,255,.96); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; }
+    .start-screen,.question-screen,.end-screen { padding:34px; }
+    .badge { display:inline-block; background:#e8f0df; color:var(--green-dark); border:1px solid #d4ddca; border-radius:999px; padding:7px 13px; font-weight:bold; font-size:13px; margin-bottom:16px; }
+    h2 { margin:0 0 16px; color:var(--green-dark); font-size:32px; line-height:1.22; }
+    .lead { color:var(--muted); font-size:18px; margin-bottom:24px; }
+    .expert-note { background:#f8fbf4; border:1px solid #d4ddca; border-left:6px solid var(--green); border-radius:16px; padding:18px; color:#45523a; margin:22px 0; }
+    .info-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:26px 0; }
+    .info-card { background:var(--soft); border:1px solid var(--border); border-radius:16px; padding:16px; text-align:center; }
+    .info-card strong { display:block; color:var(--green-dark); font-size:18px; margin-bottom:4px; }
+    .info-card span { color:var(--muted); font-size:14px; }
+    .progress-area { padding:24px 34px 0; }
+    .progress-top { display:flex; justify-content:space-between; align-items:center; color:var(--muted); font-weight:bold; margin-bottom:10px; font-size:14px; }
+    .progress-bar { height:12px; background:#efe4d8; border-radius:999px; overflow:hidden; border:1px solid #e3d4c3; }
+    .progress-fill { height:100%; width:0%; background:linear-gradient(90deg,var(--green),var(--terracotta)); transition:width .25s ease; }
+    .question-text { font-size:25px; line-height:1.32; color:var(--text); margin:10px 0 24px; }
+    .answers { display:grid; gap:12px; margin-bottom:22px; }
+    .answer-btn { width:100%; text-align:left; background:#fffdf9; border:1px solid var(--border); border-radius:16px; padding:16px 18px; font-size:16px; color:var(--text); cursor:pointer; transition:transform .16s ease,background .16s ease,border .16s ease; }
+    .answer-btn:hover:not(:disabled) { transform:translateY(-2px); background:#f7efe4; border-color:#dcc9b7; }
+    .answer-btn:disabled { cursor:default; }
+    .answer-btn.correct { background:#e8f5ed; border-color:var(--correct); color:#1f5d3a; font-weight:bold; }
+    .answer-btn.wrong { background:#fff0ee; border-color:var(--wrong); color:#8f302a; font-weight:bold; }
+    .feedback { display:none; margin-top:18px; background:#f8fbf4; border-left:6px solid var(--green); border-radius:14px; padding:18px; }
+    .feedback h3 { margin:0 0 8px; font-size:20px; }
+    .feedback p { margin:0; color:var(--muted); }
+    .button-row { display:flex; gap:12px; flex-wrap:wrap; margin-top:24px; }
+    button,.link-button { border:none; border-radius:14px; padding:14px 20px; font-size:16px; font-weight:bold; cursor:pointer; text-decoration:none; display:inline-block; transition:transform .16s ease,background .16s ease; }
+    button:hover,.link-button:hover { transform:translateY(-2px); }
+    .primary-action { background:var(--green); color:#fff; }
+    .primary-action:hover { background:var(--green-dark); }
+    .secondary-action { background:#fff2df; color:#7c2d28; border:1px solid #ead4b8; }
+    .secondary-action:hover { background:#f4e3cc; }
+    .hidden { display:none; }
+    .score-big { font-size:54px; font-weight:bold; color:var(--green-dark); margin:12px 0; }
+    .result-box { background:var(--soft); border:1px solid var(--border); border-radius:18px; padding:24px; margin:22px 0; }
+    .review-list { margin-top:20px; display:grid; gap:12px; }
+    .review-item { background:#fffdf9; border:1px solid var(--border); border-radius:14px; padding:14px 16px; font-size:15px; }
+    .review-item strong { color:var(--green-dark); }
+    footer { text-align:center; color:var(--muted); padding:12px 20px 34px; font-size:14px; }
+    @media (max-width:720px) { body { background-attachment:scroll; } header h1 { font-size:34px; } header p { font-size:16px; } .start-screen,.question-screen,.end-screen { padding:24px; } .progress-area { padding:20px 24px 0; } .question-text { font-size:21px; } .info-grid { grid-template-columns:1fr; } .score-big { font-size:42px; } }
+  </style>
+</head>
+<body>
+  <div class="page-overlay">
+    <header>
+      <div class="topline">Reading Corner · Deutsch · Literatur</div>
+      <h1>Become a Literature Expert</h1>
+      <p>Geheimnis in der Tulpenstraße — literaturwissenschaftliches Quiz mit Fachbegriffen</p>
+    </header>
+    <main>
+      <section class="quiz-shell">
+        <div id="startScreen" class="start-screen">
+          <span class="badge">Deutsch · Literaturwissenschaft · 20 Fragen</span>
+          <h2>Lies die Geschichte wie ein Literaturwissenschaftler.</h2>
+          <p class="lead">Dieses Quiz fragt nicht nur: Was passiert? Es fragt: Wie funktioniert der Text? Es geht um Erzählperspektive, Fokalisierung, Erzählzeit, erzählte Zeit, Figurenrede, Raumgestaltung und Spannung.</p>
+          <div class="expert-note">Hinweis: Streng genommen ist nicht der Autor homodiegetisch oder heterodiegetisch, sondern der Erzähler. Genau solche präzisen Unterscheidungen üben wir hier.</div>
+          <div class="info-grid">
+            <div class="info-card"><strong>20</strong><span>Fachfragen</span></div>
+            <div class="info-card"><strong>schwierig</strong><span>aber klar</span></div>
+            <div class="info-card"><strong>gemischt</strong><span>Antworten A–D</span></div>
+          </div>
+          <div class="button-row">
+            <button class="primary-action" onclick="startQuiz()">Literaturquiz starten</button>
+            <a class="link-button secondary-action" href="index.html">Zurück zur Übersicht</a>
+          </div>
+        </div>
+        <div id="quizScreen" class="hidden">
+          <div class="progress-area">
+            <div class="progress-top"><span id="questionCounter">Frage 1 von 20</span><span id="scoreCounter">Punkte: 0</span></div>
+            <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+          </div>
+          <div class="question-screen">
+            <div class="badge" id="categoryBadge">Erzählperspektive</div>
+            <h2 id="questionText" class="question-text"></h2>
+            <div id="answers" class="answers"></div>
+            <div id="feedback" class="feedback"><h3 id="feedbackTitle"></h3><p id="feedbackText"></p></div>
+            <div class="button-row"><button id="nextButton" class="primary-action hidden" onclick="nextQuestion()">Nächste Frage</button></div>
+          </div>
+        </div>
+        <div id="endScreen" class="end-screen hidden">
+          <span class="badge">Quiz abgeschlossen</span>
+          <h2>Dein Ergebnis</h2>
+          <div id="scoreBig" class="score-big"></div>
+          <div class="result-box"><p id="finalMessage" class="lead"></p></div>
+          <div class="button-row"><button class="primary-action" onclick="restartQuiz()">Noch einmal versuchen</button><a class="link-button secondary-action" href="index.html">Zurück zur Übersicht</a></div>
+          <div id="reviewList" class="review-list"></div>
+        </div>
+      </section>
+    </main>
+    <footer>© 2026 Reading Corner — Stories to go</footer>
+  </div>
+  <script>
+    const questions = [
+      {
+            "category": "Erzählperspektive",
+            "question": "Welche Aussage zur Erzählperspektive passt am besten zu dieser Episode?",
+            "answers": [
+                  "Der Text hat einen Ich-Erzähler, weil Giacomo selbst erzählt.",
+                  "Der Text hat einen heterodiegetischen Erzähler, der nicht selbst als Figur in der Handlung auftritt.",
+                  "Der Text hat einen homodiegetischen Erzähler, weil Herr Cassi im Mittelpunkt steht.",
+                  "Der Text hat keinen Erzähler, weil fast nur Dialog vorkommt."
+            ],
+            "correct": 1,
+            "explanation": "Der Erzähler ist nicht selbst Figur der Geschichte. Deshalb ist er heterodiegetisch. Wichtig: Man sagt eigentlich nicht, der Autor sei homodiegetisch, sondern der Erzähler."
+      },
+      {
+            "category": "Fokalisierung",
+            "question": "Obwohl der Erzähler nicht Giacomo ist, folgt die Wahrnehmung oft Giacomo. Welcher Fachbegriff passt dazu am besten?",
+            "answers": [
+                  "Externe Fokalisierung ohne Einblick in Gedanken.",
+                  "Nullfokalisierung mit vollständigem Wissen über alle Figuren.",
+                  "Interne Fokalisierung, vor allem an Giacomos Wahrnehmung gebunden.",
+                  "Auktorialer Kommentar mit moralischer Bewertung aller Figuren."
+            ],
+            "correct": 2,
+            "explanation": "Der Leser weiß oft das, was Giacomo sieht, hört, denkt oder vermutet. Die Wahrnehmung ist also stark an Giacomo gebunden."
+      },
+      {
+            "category": "Erzählzeit und erzählte Zeit",
+            "question": "Welche Aussage zu Erzählzeit und erzählter Zeit ist am treffendsten?",
+            "answers": [
+                  "Die erzählte Zeit umfasst nur wenige Sekunden.",
+                  "Die Erzählzeit ist länger als die erzählte Zeit, weil jede Minute ausführlich beschrieben wird.",
+                  "Erzählzeit und erzählte Zeit sind identisch.",
+                  "Die erzählte Zeit reicht ungefähr von Freitagabend bis Samstagabend; die Erzählzeit ist deutlich kürzer."
+            ],
+            "correct": 3,
+            "explanation": "Die Handlung beginnt Freitagabend und reicht bis Samstagabend. Das Lesen dauert aber viel kürzer als die Zeitspanne der Handlung."
+      },
+      {
+            "category": "Zeitgestaltung",
+            "question": "Giacomos Traum vom Fußballspiel wird relativ ausführlich erzählt, obwohl er in der Handlung nur kurz dauert. Welche Zeitgestaltung liegt hier nahe?",
+            "answers": [
+                  "Zeitdeckung.",
+                  "Zeitdehnung.",
+                  "Zeitsprung.",
+                  "Rückblende über mehrere Jahre."
+            ],
+            "correct": 1,
+            "explanation": "Ein kurzer innerer Moment wird relativ ausführlich dargestellt. Das ist eine Form von Zeitdehnung."
+      },
+      {
+            "category": "Zeitgestaltung",
+            "question": "Welche Stelle ist ein gutes Beispiel für Zeitraffung?",
+            "answers": [
+                  "„Freitagabend“ als Überschrift.",
+                  "„Frau Valle weiß immer alles über alle.“",
+                  "„Giacomo sitzt schon seit zwei Stunden im Garten.“",
+                  "„Wie schön sie ist …“"
+            ],
+            "correct": 2,
+            "explanation": "Zwei Stunden werden in einem einzigen Satz zusammengefasst. Das ist Zeitraffung."
+      },
+      {
+            "category": "Figurenrede",
+            "question": "Was ist die wichtigste Funktion der vielen Dialoge in dieser Episode?",
+            "answers": [
+                  "Sie ersetzen die Handlung vollständig.",
+                  "Sie machen die Figuren lebendig und liefern Informationen schrittweise.",
+                  "Sie zeigen, dass der Erzähler nichts weiß.",
+                  "Sie verhindern Spannung, weil alles sofort erklärt wird."
+            ],
+            "correct": 1,
+            "explanation": "Die Dialoge treiben die Handlung voran, charakterisieren Figuren und geben Hinweise in kleinen Portionen."
+      },
+      {
+            "category": "Innere Rede",
+            "question": "Welche Stelle zeigt am deutlichsten Giacomos innere Gedankenwelt?",
+            "answers": [
+                  "„Die beiden gehen die Treppe hinauf.“",
+                  "„Das Abendessen ist fertig.“",
+                  "„Ja, du bist wunderschön, du bist das schönste Mädchen der Welt…“",
+                  "„Sie hat recht. Es sind tatsächlich Journalisten.“"
+            ],
+            "correct": 2,
+            "explanation": "Diese Stelle gibt direkt wieder, was Giacomo denkt, aber nicht auszusprechen wagt."
+      },
+      {
+            "category": "Charakterisierung",
+            "question": "Wie wird Giacomo hauptsächlich charakterisiert?",
+            "answers": [
+                  "Durch direkte Selbstbeschreibung in einem Tagebuch.",
+                  "Durch äußere Beschreibung, Gedanken, Verhalten und Dialoge.",
+                  "Nur durch Aussagen anderer Figuren.",
+                  "Nur durch die Kommentare eines allwissenden Erzählers."
+            ],
+            "correct": 1,
+            "explanation": "Der Text zeigt Giacomo durch seine Schüchternheit, seine Gedanken über Simona, seine Beobachtungen und seine Gespräche."
+      },
+      {
+            "category": "Direkte und indirekte Charakterisierung",
+            "question": "Welche Aussage ist ein Beispiel für direkte Charakterisierung?",
+            "answers": [
+                  "Giacomo schaut Herrn Moreno direkt in die Augen.",
+                  "Frau Valle ruft laut nach Herrn Cassi.",
+                  "Simona klingelt bei den Nachbarn.",
+                  "Simona ist ein großes und schlankes Mädchen mit braunen Haaren und blauen Augen."
+            ],
+            "correct": 3,
+            "explanation": "Hier beschreibt der Erzähler Simona direkt. Das ist direkte Charakterisierung."
+      },
+      {
+            "category": "Raumgestaltung",
+            "question": "Warum ist das Treppenhaus als Raum literarisch wichtig?",
+            "answers": [
+                  "Es ist ein Übergangsraum, in dem Begegnungen, Geräusche und Hinweise möglich werden.",
+                  "Es dient nur als Dekoration ohne Funktion.",
+                  "Es ist der einzige Ort, an dem Giacomo sicher ist.",
+                  "Es macht die Geschichte zu einem Reisebericht."
+            ],
+            "correct": 0,
+            "explanation": "Das Treppenhaus verbindet die Wohnungen. Dort hören, sehen und beobachten die Figuren wichtige Dinge."
+      },
+      {
+            "category": "Motiv",
+            "question": "Welches Motiv strukturiert die Episode besonders stark?",
+            "answers": [
+                  "Briefe und Bücher.",
+                  "Türen, Treppen, Klingeln und Wohnungen.",
+                  "Züge und Bahnhöfe.",
+                  "Meer, Strand und Urlaub."
+            ],
+            "correct": 1,
+            "explanation": "Die Handlung bewegt sich von Tür zu Tür, von Stockwerk zu Stockwerk. Türen, Klingeln und Wohnungen strukturieren die Ermittlungen."
+      },
+      {
+            "category": "Spannungsaufbau",
+            "question": "Welche Technik erzeugt besonders deutlich Spannung am Ende der Moreno-Szene?",
+            "answers": [
+                  "Die Szene endet mit einer vollständigen Lösung des Mordfalls.",
+                  "Herr Moreno sagt ernst: „Darüber werden wir noch sprechen!“",
+                  "Frau Moreno bringt den Zucker sofort.",
+                  "Die Kinder spielen im Wohnzimmer."
+            ],
+            "correct": 1,
+            "explanation": "Der Satz wirkt drohend und bleibt offen. Dadurch entsteht Spannung und ein Verdacht gegen Herrn Moreno."
+      },
+      {
+            "category": "Foreshadowing",
+            "question": "Welche Beobachtung ist ein Beispiel für Vorausdeutung oder Foreshadowing?",
+            "answers": [
+                  "Der Aufzug ist außer Betrieb.",
+                  "Giacomo isst Spaghetti.",
+                  "Der Supermarkt schließt um acht.",
+                  "Simona hat braune Haare."
+            ],
+            "correct": 0,
+            "explanation": "Der kaputte Aufzug zwingt die Figuren zur Treppe. Dadurch kommen sie an Herrn Cassis Wohnung vorbei und hören später wichtige Hinweise."
+      },
+      {
+            "category": "Suspense",
+            "question": "Warum ist die offene Tür von Herrn Cassi ein starkes Spannungselement?",
+            "answers": [
+                  "Sie ist ein alltägliches Detail ohne Bedeutung.",
+                  "Sie zeigt sofort, wer der Täter ist.",
+                  "Sie ist ein unvollständiger Hinweis, der erst später wichtig wird.",
+                  "Sie beendet die Handlung."
+            ],
+            "correct": 2,
+            "explanation": "Die offene Tür erklärt nichts vollständig. Gerade deshalb erzeugt sie Unsicherheit und Erwartung."
+      },
+      {
+            "category": "Erzählerwissen",
+            "question": "Warum kann man den Erzähler nicht einfach als allwissend im starken Sinn bezeichnen?",
+            "answers": [
+                  "Weil der Erzähler nie in der dritten Person erzählt.",
+                  "Weil der Erzähler den Mordfall nicht sofort erklärt und die Leser mit Giacomo rätseln lässt.",
+                  "Weil alle Figuren gleichzeitig alles wissen.",
+                  "Weil es keine inneren Gedanken gibt."
+            ],
+            "correct": 1,
+            "explanation": "Der Erzähler verrät nicht die Lösung. Das Wissen der Leser bleibt begrenzt und an Giacomos Suche gebunden."
+      },
+      {
+            "category": "Erzähltempo",
+            "question": "Warum verlangsamt die Szene bei den Nachbarn das Erzähltempo?",
+            "answers": [
+                  "Weil die Handlung plötzlich mehrere Jahre überspringt.",
+                  "Weil die Ermittlungen in einzelnen Besuchen und Gesprächen entfaltet werden.",
+                  "Weil der Erzähler nur noch zusammenfasst.",
+                  "Weil keine neue Information auftaucht."
+            ],
+            "correct": 1,
+            "explanation": "Die Besuche bei Doktor Martino, Frau Bianchi und Familie Moreno werden relativ szenisch erzählt. Dadurch wird das Tempo langsamer und spannender."
+      },
+      {
+            "category": "Figurenkontrast",
+            "question": "Welcher Kontrast zwischen Frau Valle und Giacomo ist besonders wichtig?",
+            "answers": [
+                  "Frau Valle beobachtet aus Neugier und redet viel; Giacomo beobachtet, um Hinweise zu finden.",
+                  "Frau Valle ist Polizistin, Giacomo ist Journalist.",
+                  "Frau Valle ist schweigsam, Giacomo redet ständig.",
+                  "Beide wissen von Anfang an, wer der Täter ist."
+            ],
+            "correct": 0,
+            "explanation": "Beide beobachten, aber aus unterschiedlichen Gründen. Frau Valle sucht Aufmerksamkeit, Giacomo sucht Hinweise."
+      },
+      {
+            "category": "Ironie",
+            "question": "Welche Szene enthält eine komische oder ironische Brechung?",
+            "answers": [
+                  "Giacomo glaubt im Traum, ein Fußballpublikum rufe seinen Namen, aber es ist seine Mutter.",
+                  "Herr Cassi ist tot.",
+                  "Frau Bianchi spricht über ihre ruhige Wohnung.",
+                  "Simona hat Angst vor Herrn Moreno."
+            ],
+            "correct": 0,
+            "explanation": "Die große Fußballfantasie wird plötzlich durch die Alltagsrealität der Mutterstimme gebrochen."
+      },
+      {
+            "category": "Detektivstruktur",
+            "question": "Warum passt die Zucker-Ausrede gut zur Struktur einer Detektivgeschichte?",
+            "answers": [
+                  "Sie liefert eine glaubhafte Methode, Verdächtige zu besuchen und Informationen zu sammeln.",
+                  "Sie beweist, dass Zucker das Tatmotiv ist.",
+                  "Sie zeigt, dass Simona wirklich backen will.",
+                  "Sie ersetzt die Polizei vollständig."
+            ],
+            "correct": 0,
+            "explanation": "Die Ausrede bringt die jungen Ermittler in Kontakt mit möglichen Verdächtigen und eröffnet kurze Befragungsszenen."
+      },
+      {
+            "category": "Interpretation",
+            "question": "Was zeigt die letzte Gartenszene mit Frau Bianchi und Herrn Moreno literarisch?",
+            "answers": [
+                  "Dass alle offenen Fragen gelöst sind.",
+                  "Dass neue Beziehungen zwischen Figuren sichtbar werden und der Verdacht komplexer wird.",
+                  "Dass Giacomo das Interesse an der Ermittlung verliert.",
+                  "Dass Frau Valle die Wahrheit gesagt hat."
+            ],
+            "correct": 1,
+            "explanation": "Die heimliche Begegnung verschiebt die Verdachtslage. Die Figurenbeziehungen werden komplexer und die Spannung steigt."
+      }
+];
+    let currentQuestion = 0, score = 0, answered = false, userAnswers = [];
+    const startScreen = document.getElementById("startScreen");
+    const quizScreen = document.getElementById("quizScreen");
+    const endScreen = document.getElementById("endScreen");
+    const questionCounter = document.getElementById("questionCounter");
+    const scoreCounter = document.getElementById("scoreCounter");
+    const progressFill = document.getElementById("progressFill");
+    const categoryBadge = document.getElementById("categoryBadge");
+    const questionText = document.getElementById("questionText");
+    const answersBox = document.getElementById("answers");
+    const feedback = document.getElementById("feedback");
+    const feedbackTitle = document.getElementById("feedbackTitle");
+    const feedbackText = document.getElementById("feedbackText");
+    const nextButton = document.getElementById("nextButton");
+    const scoreBig = document.getElementById("scoreBig");
+    const finalMessage = document.getElementById("finalMessage");
+    const reviewList = document.getElementById("reviewList");
+    function startQuiz() { startScreen.classList.add("hidden"); quizScreen.classList.remove("hidden"); showQuestion(); }
+    function showQuestion() {
+      answered = false; const q = questions[currentQuestion];
+      categoryBadge.textContent = q.category;
+      questionCounter.textContent = "Frage " + (currentQuestion + 1) + " von " + questions.length;
+      scoreCounter.textContent = "Punkte: " + score;
+      progressFill.style.width = ((currentQuestion) / questions.length * 100) + "%";
+      questionText.textContent = q.question;
+      answersBox.innerHTML = ""; feedback.style.display = "none"; nextButton.classList.add("hidden");
+      q.answers.forEach((answer, index) => {
+        const btn = document.createElement("button");
+        btn.className = "answer-btn"; btn.textContent = answer; btn.onclick = () => chooseAnswer(index, btn);
+        answersBox.appendChild(btn);
+      });
+    }
+    function chooseAnswer(index, button) {
+      if (answered) return; answered = true;
+      const q = questions[currentQuestion]; const allButtons = document.querySelectorAll(".answer-btn");
+      allButtons.forEach(btn => btn.disabled = true);
+      const isCorrect = index === q.correct;
+      userAnswers.push({ question: q.question, chosen: q.answers[index], correct: q.answers[q.correct], isCorrect: isCorrect });
+      if (isCorrect) { score++; button.classList.add("correct"); feedbackTitle.textContent = "Richtig!"; feedbackText.textContent = q.explanation; }
+      else { button.classList.add("wrong"); allButtons[q.correct].classList.add("correct"); feedbackTitle.textContent = "Nicht ganz."; feedbackText.textContent = "Richtige Antwort: " + q.answers[q.correct] + " " + q.explanation; }
+      scoreCounter.textContent = "Punkte: " + score;
+      feedback.style.display = "block";
+      nextButton.textContent = currentQuestion === questions.length - 1 ? "Ergebnis anzeigen" : "Nächste Frage";
+      nextButton.classList.remove("hidden");
+      progressFill.style.width = ((currentQuestion + 1) / questions.length * 100) + "%";
+    }
+    function nextQuestion() { currentQuestion++; if (currentQuestion < questions.length) showQuestion(); else showResult(); }
+    function showResult() {
+      quizScreen.classList.add("hidden"); endScreen.classList.remove("hidden");
+      const percentage = Math.round((score / questions.length) * 100);
+      scoreBig.textContent = score + " / " + questions.length + " (" + percentage + "%)";
+      if (percentage >= 90) finalMessage.textContent = "Ausgezeichnet. Du denkst wirklich literaturwissenschaftlich: Perspektive, Zeit, Raum, Figuren und Spannung.";
+      else if (percentage >= 70) finalMessage.textContent = "Sehr gut. Du hast viele literarische Techniken der Episode verstanden.";
+      else if (percentage >= 50) finalMessage.textContent = "Solider Anfang. Wiederhole besonders Erzählperspektive, Fokalisierung, Erzählzeit und erzählte Zeit.";
+      else finalMessage.textContent = "Versuche es noch einmal. Achte beim Lesen besonders darauf, wer erzählt, wer wahrnimmt und wie Spannung aufgebaut wird.";
+      reviewList.innerHTML = "";
+      userAnswers.forEach((item, idx) => {
+        if (!item.isCorrect) {
+          const div = document.createElement("div"); div.className = "review-item";
+          div.innerHTML = "<strong>Frage " + (idx + 1) + ":</strong> " + item.question + "<br>Deine Antwort: " + item.chosen + "<br>Richtige Antwort: " + item.correct;
+          reviewList.appendChild(div);
+        }
+      });
+      if (reviewList.innerHTML === "") { const div = document.createElement("div"); div.className = "review-item"; div.innerHTML = "<strong>Perfekt!</strong> Du hast alle literaturwissenschaftlichen Fragen richtig beantwortet."; reviewList.appendChild(div); }
+    }
+    function restartQuiz() { currentQuestion = 0; score = 0; answered = false; userAnswers = []; endScreen.classList.add("hidden"); startScreen.classList.remove("hidden"); progressFill.style.width = "0%"; }
+  </script>
+</body>
+</html>
