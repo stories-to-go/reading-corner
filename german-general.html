@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deutsch Allgemeines Quiz | Reading Corner</title>
+  <style>
+    :root { --soft:#fffaf4; --terracotta:#9c3b34; --terracotta-dark:#7c2d28; --olive-dark:#3f5221; --text:#2f2a26; --muted:#6c625a; --border:#eadfce; --correct:#2f7d4f; --wrong:#b0443c; --shadow:0 14px 36px rgba(60,35,20,.12); --radius:22px; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Arial,sans-serif; background:linear-gradient(rgba(34,24,18,.30),rgba(34,24,18,.48)),url('cover.png.png') center/cover fixed no-repeat; color:var(--text); line-height:1.6; min-height:100vh; }
+    .page-overlay { min-height:100vh; background:linear-gradient(to bottom,rgba(247,241,232,.78),rgba(247,241,232,.94)); padding-bottom:36px; }
+    header { text-align:center; padding:46px 20px 28px; color:#fff; background:linear-gradient(135deg,rgba(124,45,40,.92),rgba(156,59,52,.90)); box-shadow:0 6px 22px rgba(0,0,0,.14); }
+    header .topline { text-transform:uppercase; letter-spacing:1.4px; font-size:14px; opacity:.92; margin-bottom:8px; }
+    header h1 { margin:0; font-size:44px; line-height:1.12; }
+    header p { margin:12px auto 0; max-width:760px; font-size:18px; opacity:.97; }
+    main { max-width:920px; margin:34px auto; padding:0 18px; }
+    .quiz-shell { background:rgba(255,255,255,.96); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; }
+    .start-screen,.question-screen,.end-screen { padding:34px; }
+    .badge { display:inline-block; background:#fff2df; color:var(--terracotta-dark); border:1px solid #ead4b8; border-radius:999px; padding:7px 13px; font-weight:bold; font-size:13px; margin-bottom:16px; }
+    h2 { margin:0 0 16px; color:var(--terracotta-dark); font-size:32px; line-height:1.22; }
+    .lead { color:var(--muted); font-size:18px; margin-bottom:24px; }
+    .info-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:26px 0; }
+    .info-card { background:var(--soft); border:1px solid var(--border); border-radius:16px; padding:16px; text-align:center; }
+    .info-card strong { display:block; color:var(--olive-dark); font-size:18px; margin-bottom:4px; }
+    .info-card span { color:var(--muted); font-size:14px; }
+    .progress-area { padding:24px 34px 0; }
+    .progress-top { display:flex; justify-content:space-between; align-items:center; color:var(--muted); font-weight:bold; margin-bottom:10px; font-size:14px; }
+    .progress-bar { height:12px; background:#efe4d8; border-radius:999px; overflow:hidden; border:1px solid #e3d4c3; }
+    .progress-fill { height:100%; width:0%; background:linear-gradient(90deg,#556b2f,var(--terracotta)); transition:width .25s ease; }
+    .question-text { font-size:25px; line-height:1.32; color:var(--text); margin:10px 0 24px; }
+    .answers { display:grid; gap:12px; margin-bottom:22px; }
+    .answer-btn { width:100%; text-align:left; background:#fffdf9; border:1px solid var(--border); border-radius:16px; padding:16px 18px; font-size:16px; color:var(--text); cursor:pointer; transition:transform .16s ease,background .16s ease,border .16s ease; }
+    .answer-btn:hover:not(:disabled) { transform:translateY(-2px); background:#f7efe4; border-color:#dcc9b7; }
+    .answer-btn:disabled { cursor:default; }
+    .answer-btn.correct { background:#e8f5ed; border-color:var(--correct); color:#1f5d3a; font-weight:bold; }
+    .answer-btn.wrong { background:#fff0ee; border-color:var(--wrong); color:#8f302a; font-weight:bold; }
+    .feedback { display:none; margin-top:18px; background:#fff8ec; border-left:6px solid var(--terracotta); border-radius:14px; padding:18px; }
+    .feedback h3 { margin:0 0 8px; font-size:20px; }
+    .feedback p { margin:0; color:var(--muted); }
+    .button-row { display:flex; gap:12px; flex-wrap:wrap; margin-top:24px; }
+    button,.link-button { border:none; border-radius:14px; padding:14px 20px; font-size:16px; font-weight:bold; cursor:pointer; text-decoration:none; display:inline-block; transition:transform .16s ease,background .16s ease; }
+    button:hover,.link-button:hover { transform:translateY(-2px); }
+    .primary-action { background:var(--terracotta); color:#fff; }
+    .primary-action:hover { background:var(--terracotta-dark); }
+    .secondary-action { background:#e8efe1; color:var(--olive-dark); border:1px solid #d4ddca; }
+    .secondary-action:hover { background:#dde8d3; }
+    .hidden { display:none; }
+    .score-big { font-size:54px; font-weight:bold; color:var(--terracotta-dark); margin:12px 0; }
+    .result-box { background:var(--soft); border:1px solid var(--border); border-radius:18px; padding:24px; margin:22px 0; }
+    .review-list { margin-top:20px; display:grid; gap:12px; }
+    .review-item { background:#fffdf9; border:1px solid var(--border); border-radius:14px; padding:14px 16px; font-size:15px; }
+    .review-item strong { color:var(--terracotta-dark); }
+    footer { text-align:center; color:var(--muted); padding:12px 20px 34px; font-size:14px; }
+    @media (max-width:720px) { body { background-attachment:scroll; } header h1 { font-size:34px; } header p { font-size:16px; } .start-screen,.question-screen,.end-screen { padding:24px; } .progress-area { padding:20px 24px 0; } .question-text { font-size:21px; } .info-grid { grid-template-columns:1fr; } .score-big { font-size:42px; } }
+  </style>
+</head>
+<body>
+  <div class="page-overlay">
+    <header>
+      <div class="topline">Reading Corner · Deutsch</div>
+      <h1>Check Your Understanding</h1>
+      <p>Geheimnis in der Tulpenstraße — schwierigeres allgemeines Quiz</p>
+    </header>
+    <main>
+      <section class="quiz-shell">
+        <div id="startScreen" class="start-screen">
+          <span class="badge">Deutsch · Allgemeines Verständnis · 20 Fragen</span>
+          <h2>Wie genau hast du die Geschichte gelesen?</h2>
+          <p class="lead">Dieses Quiz prüft nicht nur einfache Fakten. Es fragt nach Reihenfolge, Motiven, Verdachtsmomenten, Details und kleinen Hinweisen in der Geschichte.</p>
+          <div class="info-grid">
+            <div class="info-card"><strong>20</strong><span>Fragen</span></div>
+            <div class="info-card"><strong>schwieriger</strong><span>als ein normales Quiz</span></div>
+            <div class="info-card"><strong>gemischt</strong><span>Antworten A–D</span></div>
+          </div>
+          <div class="button-row">
+            <button class="primary-action" onclick="startQuiz()">Quiz starten</button>
+            <a class="link-button secondary-action" href="index.html">Zurück zur Übersicht</a>
+          </div>
+        </div>
+        <div id="quizScreen" class="hidden">
+          <div class="progress-area">
+            <div class="progress-top"><span id="questionCounter">Frage 1 von 20</span><span id="scoreCounter">Punkte: 0</span></div>
+            <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+          </div>
+          <div class="question-screen">
+            <div class="badge" id="categoryBadge">Handlung</div>
+            <h2 id="questionText" class="question-text"></h2>
+            <div id="answers" class="answers"></div>
+            <div id="feedback" class="feedback"><h3 id="feedbackTitle"></h3><p id="feedbackText"></p></div>
+            <div class="button-row"><button id="nextButton" class="primary-action hidden" onclick="nextQuestion()">Nächste Frage</button></div>
+          </div>
+        </div>
+        <div id="endScreen" class="end-screen hidden">
+          <span class="badge">Quiz abgeschlossen</span>
+          <h2>Dein Ergebnis</h2>
+          <div id="scoreBig" class="score-big"></div>
+          <div class="result-box"><p id="finalMessage" class="lead"></p></div>
+          <div class="button-row"><button class="primary-action" onclick="restartQuiz()">Noch einmal versuchen</button><a class="link-button secondary-action" href="index.html">Zurück zur Übersicht</a></div>
+          <div id="reviewList" class="review-list"></div>
+        </div>
+      </section>
+    </main>
+    <footer>© 2026 Reading Corner — Stories to go</footer>
+  </div>
+  <script>
+    const questions = [{'category': 'Anfang', 'question': 'Warum kommt Giacomo am Freitagabend mit dem Fahrrad nach Hause?', 'answers': ['Er hat im Supermarkt Kaffee gekauft.', 'Er kommt vom Fußballtraining zurück.', 'Er hat Frau Valle besucht.', 'Er war im Krankenhaus bei Doktor Martino.'], 'correct': 1, 'explanation': 'Giacomo geht jeden Dienstag und Freitag zum Fußballtraining und fährt mit dem Fahrrad hin und zurück.'}, {'category': 'Simona', 'question': 'Was erfährt man über Simona, bevor die beiden die Treppe hinaufgehen?', 'answers': ['Sie sucht ihren kleinen Bruder Federico.', 'Sie kommt gerade vom Meer zurück.', 'Sie hat Kaffee gekauft, weil ihre Mutter ihn vergessen hatte.', 'Sie hat Herrn Cassi besucht.'], 'correct': 2, 'explanation': 'Simona sagt, dass sie im Supermarkt Kaffee gekauft hat, weil ihre Mutter ihn vergessen hatte.'}, {'category': 'Aufzug', 'question': 'Welche kleine Alltagssituation führt dazu, dass Giacomo und Simona vor Herrn Cassis Wohnung vorbeikommen?', 'answers': ['Die Polizei sperrt das Treppenhaus.', 'Herr Cassi bittet sie um Hilfe.', 'Der Aufzug ist außer Betrieb.', 'Frau Valle ruft sie zu sich.'], 'correct': 2, 'explanation': 'Weil der Aufzug kaputt ist, müssen sie die Treppe nehmen und kommen an Herrn Cassis Wohnung vorbei.'}, {'category': 'Herr Cassi', 'question': 'Was passt am besten zu Giacomos erster Beschreibung von Herrn Cassi?', 'answers': ['Er wirkt fröhlich, sportlich und sehr gesprächig.', 'Er wirkt wie ein enger Freund von Giacomos Familie.', 'Er wirkt grau, ernst und nicht wie jemand, der je jung gewesen ist.', 'Er wirkt reich, elegant und immer freundlich.'], 'correct': 2, 'explanation': 'Giacomo denkt an einen kleinen, dünnen Mann mit grauem Gesicht und sagt scherzhaft, er sehe aus wie jemand, der nie jung war.'}, {'category': 'Musik', 'question': 'Warum ist die laute Musik erzählerisch wichtig?', 'answers': ['Sie erklärt, warum Doktor Martino im Krankenhaus ist.', 'Sie macht Herrn Cassi zum Mittelpunkt eines Konflikts im Haus.', 'Sie beweist sofort, wer der Mörder ist.', 'Sie zeigt, dass Simona Musikunterricht nimmt.'], 'correct': 1, 'explanation': 'Viele Nachbarn beschweren sich über den Lärm; dadurch entsteht ein möglicher Konflikt um Herrn Cassi.'}, {'category': 'Fahrrad', 'question': 'Warum schickt Giacomos Vater ihn nach dem Abendessen wieder nach unten?', 'answers': ['Giacomo soll Simona Kaffee bringen.', 'Giacomo soll Herrn Cassi um Ruhe bitten.', 'Giacomo soll sein Fahrrad vom Eingang wegbringen.', 'Giacomo soll Frau Valle zur Polizei begleiten.'], 'correct': 2, 'explanation': 'Der Vater erinnert ihn daran, dass sich die Nachbarn über Fahrräder und Motorräder beim Eingang beschweren.'}, {'category': 'Hinweis', 'question': 'Welche Beobachtung macht Giacomo, nachdem er sein Fahrrad in die Garage gebracht hat?', 'answers': ['Er findet eine Mordwaffe neben dem Eingangstor.', 'Er hört eine Tür und sieht danach Herrn Cassis Tür offen.', 'Er trifft Doktor Martino im Treppenhaus.', 'Er sieht Frau Bianchi im Garten.'], 'correct': 1, 'explanation': 'In der Stille hört Giacomo eine Tür, die sich öffnet und schließt, und sieht dann Herrn Cassis Tür offen.'}, {'category': 'Samstagmorgen', 'question': 'Warum kann Giacomo am Samstag eigentlich länger schlafen?', 'answers': ['Weil seine Eltern verreist sind.', 'Weil Fußballtraining ausfällt.', 'Weil die Lehrer streiken und er nicht zur Schule geht.', 'Weil er keine Hausaufgaben hat.'], 'correct': 2, 'explanation': 'Am Samstag geht Giacomo nicht zur Schule, weil die Lehrer streiken.'}, {'category': 'Nachricht', 'question': 'Was ist das Entscheidende an der Nachricht, die Giacomos Mutter ihm bringt?', 'answers': ['Herr Cassi hat den Hausverwalter verklagt.', 'Herr Cassi ist tot und man sagt, er sei ermordet worden.', 'Herr Cassi hat sich bei allen Nachbarn entschuldigt.', 'Herr Cassi ist nach Spanien gezogen.'], 'correct': 1, 'explanation': 'Die Mutter sagt, dass Herr Cassi tot ist und dass man sagt, er sei ermordet worden.'}, {'category': 'Polizei', 'question': 'Wie reagiert der jüngere Polizist auf Giacomos Hinweis mit der Tür?', 'answers': ['Er fragt nur nach dem Fußballtraining.', 'Er glaubt Giacomo ohne jede Einschränkung.', 'Er sagt, es könne auch die Tür einer anderen Wohnung gewesen sein.', 'Er verhaftet sofort Herrn Moreno.'], 'correct': 2, 'explanation': 'Der Polizist relativiert Giacomos Beobachtung: Das Geräusch kann auch von einer anderen Wohnung gekommen sein.'}, {'category': 'Ermittlungen', 'question': 'Welche Spur wollen die Polizisten zunächst verfolgen?', 'answers': ['Die Beziehung zwischen Simona und Giacomo.', 'Die Bekanntschaften und zwielichtigen Freunde von Herrn Cassi.', 'Die kaputte Aufzugtür.', 'Die Frage, wer Kaffee gekauft hat.'], 'correct': 1, 'explanation': 'Die Polizisten sprechen davon, der Spur der Bekanntschaften von Herrn Cassi zu folgen.'}, {'category': 'Frau Valle', 'question': 'Warum ist Frau Valle als Figur für die Handlung wichtig?', 'answers': ['Sie repariert den Aufzug.', 'Sie ist die Frau von Doktor Martino.', 'Sie beobachtet die Nachbarn, findet Herrn Cassi und redet später mit Journalisten.', 'Sie versteckt die Mordwaffe im Garten.'], 'correct': 2, 'explanation': 'Frau Valle beobachtet die Nachbarn, findet den Körper und tritt dann gern vor den Journalisten auf.'}, {'category': 'Giacomos Reaktion', 'question': 'Warum ist Giacomo am Samstagmittag wütend?', 'answers': ['Er darf nicht zum Fußballtraining gehen.', 'Frau Bianchi gibt ihm keinen Zucker.', 'Er glaubt, die Polizei nehme seine Beobachtung mit der Tür nicht ernst genug.', 'Simona will nicht mit ihm sprechen.'], 'correct': 2, 'explanation': 'Giacomo denkt, die Polizei glaube ihm vielleicht nicht und halte seine Geschichte für erfunden.'}, {'category': 'Simona und Giacomo', 'question': 'Was ist Simonas erste vernünftige Reaktion, als Giacomo sagt, ein Nachbar könne der Täter sein?', 'answers': ['Sie glaubt sofort, dass Frau Valle schuldig ist.', 'Sie sagt, er habe es der Polizei gesagt und jetzt sei die Polizei dran.', 'Sie rennt direkt zu Herrn Moreno.', 'Sie will sofort alle Nachbarn verhaften.'], 'correct': 1, 'explanation': 'Simona reagiert zunächst nüchtern: Giacomo hat es der Polizei gesagt, also ist es eigentlich deren Aufgabe.'}, {'category': 'Plan', 'question': 'Warum fragen Giacomo und Simona bei den Nachbarn nach Zucker?', 'answers': ['Sie wollen wirklich sofort einen Kuchen backen.', 'Sie sammeln Zutaten für Frau Valle.', 'Die Ausrede soll ihnen ermöglichen, in die Wohnungen zu kommen und mit den Nachbarn zu sprechen.', 'Sie wollen testen, wer den besten Zucker besitzt.'], 'correct': 2, 'explanation': 'Der Zucker ist nur eine Ausrede, damit sie die Wohnungen betreten und Fragen stellen können.'}, {'category': 'Verdacht', 'question': 'Warum schließt Giacomo Frau Valle vorläufig als Verdächtige aus?', 'answers': ['Sie ist mit ihrem Sohn am Meer.', 'Sie redet zu viel und wirkt körperlich zu schwach für die Tat.', 'Sie ist Giacomos Großmutter.', 'Sie war die ganze Nacht im Krankenhaus.'], 'correct': 1, 'explanation': 'Giacomo meint, Frau Valle rede zu viel und wiege höchstens fünfzig Kilo; für die Tat brauche man Kraft.'}, {'category': 'Doktor Martino', 'question': 'Was sagt Doktor Martino über den Abend des Mordes?', 'answers': ['Er habe mit Herrn Moreno im Garten gesprochen.', 'Er sei bei Frau Bianchi gewesen.', 'Er sei im Krankenhaus zur Nachtschicht gewesen.', 'Er habe Herrn Cassi besucht.'], 'correct': 2, 'explanation': 'Doktor Martino sagt, er sei gestern nicht zu Hause gewesen, sondern im Krankenhaus zur Nachtschicht.'}, {'category': 'Frau Bianchi', 'question': 'Welche Information über Frau Bianchis Wohnung wird im Gespräch wichtig?', 'answers': ['Die Wohnung ist völlig unordentlich.', 'Die Wohnung gehört Herrn Cassi.', 'Die Wohnung geht zum Innenhof, weil sie Lärm nicht erträgt.', 'Die Wohnung liegt direkt neben dem Supermarkt.'], 'correct': 2, 'explanation': 'Frau Bianchi sagt, sie und ihr Mann wollten eine Wohnung zum Innenhof, weil sie Lärm nicht erträgt.'}, {'category': 'Herr Moreno', 'question': 'Was macht Herrn Moreno für Simona besonders beunruhigend?', 'answers': ['Er behauptet, Herr Cassi sei nie laut gewesen.', 'Er reagiert ernst, als Giacomo sagt, er sei so etwas wie ein Zeuge.', 'Er sagt, er sei am Meer gewesen.', 'Er weigert sich, ihnen Zucker zu geben.'], 'correct': 1, 'explanation': 'Simona sagt später, Herr Moreno habe eher besorgt gewirkt und ihr Angst gemacht.'}, {'category': 'Ende der Episode', 'question': 'Was beobachtet Giacomo später im Garten, das den Verdacht komplizierter macht?', 'answers': ['Doktor Martino steigt aus einem Polizeiauto.', 'Frau Valle versteckt einen stumpfen Gegenstand.', 'Frau Bianchi und Herr Moreno treffen sich heimlich und umarmen sich.', 'Frau Villa kommt mit ihrem Sohn aus dem Urlaub zurück.'], 'correct': 2, 'explanation': 'Giacomo sieht im Garten Frau Bianchi und Herrn Moreno zusammen; sie umarmen sich und sprechen leise.'}];
+    let currentQuestion = 0, score = 0, answered = false, userAnswers = [];
+    const startScreen = document.getElementById("startScreen");
+    const quizScreen = document.getElementById("quizScreen");
+    const endScreen = document.getElementById("endScreen");
+    const questionCounter = document.getElementById("questionCounter");
+    const scoreCounter = document.getElementById("scoreCounter");
+    const progressFill = document.getElementById("progressFill");
+    const categoryBadge = document.getElementById("categoryBadge");
+    const questionText = document.getElementById("questionText");
+    const answersBox = document.getElementById("answers");
+    const feedback = document.getElementById("feedback");
+    const feedbackTitle = document.getElementById("feedbackTitle");
+    const feedbackText = document.getElementById("feedbackText");
+    const nextButton = document.getElementById("nextButton");
+    const scoreBig = document.getElementById("scoreBig");
+    const finalMessage = document.getElementById("finalMessage");
+    const reviewList = document.getElementById("reviewList");
+
+    function startQuiz() {
+      startScreen.classList.add("hidden");
+      quizScreen.classList.remove("hidden");
+      showQuestion();
+    }
+
+    function showQuestion() {
+      answered = false;
+      const q = questions[currentQuestion];
+      categoryBadge.textContent = q.category;
+      questionCounter.textContent = "Frage " + (currentQuestion + 1) + " von " + questions.length;
+      scoreCounter.textContent = "Punkte: " + score;
+      progressFill.style.width = ((currentQuestion) / questions.length * 100) + "%";
+      questionText.textContent = q.question;
+      answersBox.innerHTML = "";
+      feedback.style.display = "none";
+      nextButton.classList.add("hidden");
+      q.answers.forEach((answer, index) => {
+        const btn = document.createElement("button");
+        btn.className = "answer-btn";
+        btn.textContent = answer;
+        btn.onclick = () => chooseAnswer(index, btn);
+        answersBox.appendChild(btn);
+      });
+    }
+
+    function chooseAnswer(index, button) {
+      if (answered) return;
+      answered = true;
+      const q = questions[currentQuestion];
+      const allButtons = document.querySelectorAll(".answer-btn");
+      allButtons.forEach(btn => btn.disabled = true);
+      const isCorrect = index === q.correct;
+      userAnswers.push({ question: q.question, chosen: q.answers[index], correct: q.answers[q.correct], isCorrect: isCorrect });
+      if (isCorrect) {
+        score++;
+        button.classList.add("correct");
+        feedbackTitle.textContent = "Richtig!";
+        feedbackText.textContent = q.explanation;
+      } else {
+        button.classList.add("wrong");
+        allButtons[q.correct].classList.add("correct");
+        feedbackTitle.textContent = "Nicht ganz.";
+        feedbackText.textContent = "Richtige Antwort: " + q.answers[q.correct] + " " + q.explanation;
+      }
+      scoreCounter.textContent = "Punkte: " + score;
+      feedback.style.display = "block";
+      nextButton.textContent = currentQuestion === questions.length - 1 ? "Ergebnis anzeigen" : "Nächste Frage";
+      nextButton.classList.remove("hidden");
+      progressFill.style.width = ((currentQuestion + 1) / questions.length * 100) + "%";
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < questions.length) showQuestion();
+      else showResult();
+    }
+
+    function showResult() {
+      quizScreen.classList.add("hidden");
+      endScreen.classList.remove("hidden");
+      const percentage = Math.round((score / questions.length) * 100);
+      scoreBig.textContent = score + " / " + questions.length + " (" + percentage + "%)";
+      if (percentage >= 90) finalMessage.textContent = "Ausgezeichnet. Du hast die Geschichte sehr genau gelesen und auch kleine Hinweise verstanden.";
+      else if (percentage >= 70) finalMessage.textContent = "Sehr gut. Du hast die wichtigsten Ereignisse und Verdachtsmomente verstanden.";
+      else if (percentage >= 50) finalMessage.textContent = "Solider Anfang. Lies die Episode noch einmal und achte besonders auf kleine Hinweise.";
+      else finalMessage.textContent = "Versuche es nach dem erneuten Lesen noch einmal. Die schwierigen Fragen werden dann viel leichter.";
+      reviewList.innerHTML = "";
+      userAnswers.forEach((item, idx) => {
+        if (!item.isCorrect) {
+          const div = document.createElement("div");
+          div.className = "review-item";
+          div.innerHTML = "<strong>Frage " + (idx + 1) + ":</strong> " + item.question + "<br>Deine Antwort: " + item.chosen + "<br>Richtige Antwort: " + item.correct;
+          reviewList.appendChild(div);
+        }
+      });
+      if (reviewList.innerHTML === "") {
+        const div = document.createElement("div");
+        div.className = "review-item";
+        div.innerHTML = "<strong>Perfekt!</strong> Du hast alle Fragen richtig beantwortet.";
+        reviewList.appendChild(div);
+      }
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0; score = 0; answered = false; userAnswers = [];
+      endScreen.classList.add("hidden");
+      startScreen.classList.remove("hidden");
+      progressFill.style.width = "0%";
+    }
+  </script>
+</body>
+</html>
