@@ -110,39 +110,107 @@
       font-size: 17px;
     }
 
-    .info-box {
-  border-radius: 16px;
-  padding: 20px;
-  color: white;
-  min-height: 150px;
+   .info-boxes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  margin-top: 28px;
+}
+
+.info-box {
+  background: white;
+  border: 1px solid #eadfce;
+  border-radius: 20px;
+  padding: 22px;
+  min-height: 190px;
+  box-shadow: 0 8px 22px rgba(60, 35, 20, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.info-box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 8px;
+  width: 100%;
+}
+
+.info-label {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  margin-bottom: 16px;
 }
 
 .info-box h3 {
-  margin: 0 0 8px;
-  color: white;
-  font-size: 20px;
+  margin: 0 0 12px;
+  font-size: 23px;
+  line-height: 1.25;
 }
 
 .info-box p {
-  color: white;
-  margin-bottom: 0;
+  margin: 0;
+  color: #4e443d;
+  font-size: 16px;
+  line-height: 1.55;
 }
-    
-    .info-box.story {
+
+.info-box.story {
+  background: linear-gradient(to bottom, #fff8f7 0%, #ffffff 100%);
+}
+
+.info-box.story::before {
   background: #9c3b34;
-  border: 1px solid #7e2f2a;
+}
+
+.info-box.story h3 {
+  color: #9c3b34;
+}
+
+.info-box.story .info-label {
+  background: #f4dedb;
+  color: #9c3b34;
 }
 
 .info-box.literature {
+  background: linear-gradient(to bottom, #f8fbf4 0%, #ffffff 100%);
+}
+
+.info-box.literature::before {
   background: #6f8f4e;
-  border: 1px solid #5d7b40;
+}
+
+.info-box.literature h3 {
+  color: #5f7c43;
+}
+
+.info-box.literature .info-label {
+  background: #e8f0df;
+  color: #5f7c43;
 }
 
 .info-box.law {
-  background: #335c81;
-  border: 1px solid #274967;
+  background: linear-gradient(to bottom, #f5f9fc 0%, #ffffff 100%);
 }
 
+.info-box.law::before {
+  background: #335c81;
+}
+
+.info-box.law h3 {
+  color: #335c81;
+}
+
+.info-box.law .info-label {
+  background: #dfeaf4;
+  color: #335c81;
+}
     .layout {
       display: grid;
       grid-template-columns: 280px 1fr 280px;
@@ -332,7 +400,12 @@
       }
     }
 
-    @media (max-width: 760px) {
+    @media (max-width: 760px) 
+    .info-boxes {
+  grid-template-columns: 1fr;
+}
+    
+    {
       .hero {
         min-height: 470px;
         padding: 40px 16px;
@@ -401,29 +474,32 @@
   </p>
 
   <div class="info-boxes">
-    <div class="info-box">
-    <div class="info-box story">
-  <h3>Check Your Understanding</h3>
-  <p>
-    Focus on the plot, the characters, the clues, and the most important events.
-  </p>
-</div>
 
-<div class="info-box literature">
-  <h3>Become a Literature Expert</h3>
-  <p>
-    Focus on narration, style, literary devices, genre, and interpretation.
-  </p>
-</div>
-
-<div class="info-box law">
-  <h3>Become a Law Expert</h3>
-  <p>
-    Focus on witnesses, suspects, clues, evidence, investigation, and basic legal thinking.
-  </p>
-</div>
-    </div>
+  <div class="info-box story">
+    <div class="info-label">Story</div>
+    <h3>Check Your Understanding</h3>
+    <p>
+      Focus on the plot, the characters, the clues, and the most important events.
+    </p>
   </div>
+
+  <div class="info-box literature">
+    <div class="info-label">Literature</div>
+    <h3>Become a Literature Expert</h3>
+    <p>
+      Focus on narration, style, literary devices, genre, and interpretation.
+    </p>
+  </div>
+
+  <div class="info-box law">
+    <div class="info-label">Law</div>
+    <h3>Become a Law Expert</h3>
+    <p>
+      Focus on witnesses, suspects, clues, evidence, investigation, and basic legal thinking.
+    </p>
+  </div>
+
+</div>
 </section>
 
     <section class="layout">
