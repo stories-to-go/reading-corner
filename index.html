@@ -382,6 +382,71 @@
 
     .bottom-note strong {
       color: var(--terracotta-dark);
+      display: block;
+      font-size: 22px;
+      margin-bottom: 16px;
+    }
+
+    .latin-buttons {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 6px;
+    }
+
+    .latin-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 58px;
+      border-radius: 14px;
+      color: white;
+      font-weight: bold;
+      font-size: 15px;
+      text-align: center;
+      box-shadow: 0 6px 14px rgba(60, 35, 20, 0.12);
+      transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .latin-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(60, 35, 20, 0.16);
+    }
+
+    .latin-button.medicine {
+      background: var(--terracotta);
+      border: 1px solid var(--terracotta-dark);
+    }
+
+    .latin-button.medicine:hover {
+      background: var(--terracotta-dark);
+    }
+
+    .latin-button.latin-law {
+      background: #6f8f4e;
+      border: 1px solid #5d7b40;
+    }
+
+    .latin-button.latin-law:hover {
+      background: #5f7c43;
+    }
+
+    .latin-button.philosophy {
+      background: var(--lake-blue);
+      border: 1px solid var(--lake-blue-dark);
+    }
+
+    .latin-button.philosophy:hover {
+      background: var(--lake-blue-dark);
+    }
+
+    .latin-button.daily-life {
+      background: #b88725;
+      border: 1px solid #98701d;
+    }
+
+    .latin-button.daily-life:hover {
+      background: #98701d;
     }
 
     footer {
@@ -439,6 +504,10 @@
       }
 
       .language-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .latin-buttons {
         grid-template-columns: 1fr;
       }
 
@@ -600,8 +669,13 @@
   </div>
         
         <div class="bottom-note">
-          <strong>More quizzes coming soon.</strong><br>
-          New quiz pages will be added step by step as the project grows.
+          <strong>Check Your Latin Knowledge</strong>
+          <div class="latin-buttons">
+            <a class="latin-button medicine" href="latin-medicine.html">Medicine</a>
+            <a class="latin-button latin-law" href="latin-law.html">Law</a>
+            <a class="latin-button philosophy" href="latin-philosophy.html">Philosophy</a>
+            <a class="latin-button daily-life" href="latin-daily-life.html">Daily Life</a>
+          </div>
         </div>
       </section>
 
