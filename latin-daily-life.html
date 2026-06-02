@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Latin for Daily Life | Reading Corner</title>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W2T7NTPHXZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-W2T7NTPHXZ', { page_title: 'Latin for Daily Life', page_path: '/reading-corner/latin-daily-life.html' });
+  </script>
+  <style>
+    :root {
+      --cream:#f6f1e8; --white:#fff; --text:#2f2a26; --muted:#6e655d;
+      --terracotta:#9c3b34; --terracotta-dark:#7e2f2a; --olive:#556b2f;
+      --border:#eadfce; --shadow:0 10px 30px rgba(60,35,20,.10);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(to bottom,#f8f4ee,#f3ede3);color:var(--text);line-height:1.6}
+    header{background:linear-gradient(rgba(32,22,16,.55),rgba(32,22,16,.62)),url('cover.png.png') center/cover no-repeat;color:white;text-align:center;padding:70px 20px}
+    header h1{font-size:46px;margin:0 0 12px}
+    header p{font-size:20px;max-width:850px;margin:0 auto}
+    main{max-width:980px;margin:-35px auto 60px;padding:0 18px}
+    .intro,.question-card,.result{background:rgba(255,255,255,.97);border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow);padding:28px;margin-bottom:22px}
+    .intro h2{margin-top:0;color:var(--terracotta-dark)}
+    .latin-expression{font-size:26px;font-weight:bold;color:var(--terracotta-dark);background:#fff8ec;border-left:6px solid var(--terracotta);border-radius:14px;padding:14px 18px;margin:18px 0}
+    .question-topline{font-size:13px;text-transform:uppercase;letter-spacing:.8px;color:var(--olive);font-weight:bold}
+    .question-card h2{font-size:23px;margin:8px 0 18px;color:var(--terracotta-dark)}
+    .options{display:grid;grid-template-columns:1fr;gap:10px}
+    .option{text-align:left;border:1px solid #dccdbb;border-radius:14px;background:#fffdf9;padding:14px 16px;font-size:16px;cursor:pointer;transition:.2s}
+    .option:hover{transform:translateY(-1px);box-shadow:0 5px 12px rgba(60,35,20,.10)}
+    .option.correct{background:#eef7e8;border-color:#7aa45a;color:#36521f;font-weight:bold}
+    .option.wrong{background:#fae8e6;border-color:#b95b52;color:#7e2f2a;font-weight:bold}
+    .explanation{display:none;margin:14px 0 0;color:#4e443d;background:#fff9ef;border-radius:12px;padding:13px 15px}
+    .controls{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;border-radius:14px;padding:12px 18px;font-weight:bold;text-decoration:none;border:0;cursor:pointer}
+    .btn.home{background:var(--terracotta);color:white}
+    .btn.reset{background:#6f8f4e;color:white}
+    .result{text-align:center}
+    .score{font-size:34px;font-weight:bold;color:var(--terracotta-dark)}
+    footer{text-align:center;color:var(--muted);padding:20px}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Latin for Daily Life</h1>
+    <p>Latin expressions that can still be useful in ordinary speech, learning, friendship and personal discipline.</p>
+  </header>
+  <main>
+    <section class="intro">
+      <h2>How to use this quiz</h2>
+      <p>Choose the best answer. After every question, you will see a short explanation. The goal is not only to guess, but to understand the Latin expression.</p>
+      <div class="latin-expression">Non scholae sed vitae discimus.</div>
+      <p><strong>Meaning:</strong> We learn not for school, but for life.</p>
+    </section>
+    
+        <section class="question-card">
+          <div class="question-topline">Question 1</div>
+          <h2>What does “carpe diem” mean?</h2>
+          <div class="options"><button class="option" data-correct="true">Seize the day</button><button class="option" data-correct="false">Close the door</button><button class="option" data-correct="false">Read the book</button><button class="option" data-correct="false">Wait for tomorrow</button></div>
+          <p class="explanation">The phrase encourages us to use the present moment well.</p>
+        </section>
+        <section class="question-card">
+          <div class="question-topline">Question 2</div>
+          <h2>What does “festina lente” mean?</h2>
+          <div class="options"><button class="option" data-correct="true">Make haste slowly</button><button class="option" data-correct="false">Sleep quickly</button><button class="option" data-correct="false">Speak loudly</button><button class="option" data-correct="false">Forget carefully</button></div>
+          <p class="explanation">It means: act with energy, but not with careless haste.</p>
+        </section>
+        <section class="question-card">
+          <div class="question-topline">Question 3</div>
+          <h2>What does “per aspera ad astra” mean?</h2>
+          <div class="options"><button class="option" data-correct="true">Through difficulties to the stars</button><button class="option" data-correct="false">Through money to peace</button><button class="option" data-correct="false">Through silence to fear</button><button class="option" data-correct="false">Through sleep to wisdom</button></div>
+          <p class="explanation">A beautiful expression about reaching higher goals through hardship.</p>
+        </section>
+        <section class="question-card">
+          <div class="question-topline">Question 4</div>
+          <h2>What does “audentes fortuna iuvat” mean?</h2>
+          <div class="options"><button class="option" data-correct="true">Fortune helps the bold</button><button class="option" data-correct="false">Fortune avoids the wise</button><button class="option" data-correct="false">Money helps the lazy</button><button class="option" data-correct="false">Silence helps the guilty</button></div>
+          <p class="explanation">The phrase praises courage and initiative.</p>
+        </section>
+        <section class="question-card">
+          <div class="question-topline">Question 5</div>
+          <h2>What does “tempus fugit” mean?</h2>
+          <div class="options"><button class="option" data-correct="true">Time flies</button><button class="option" data-correct="false">Truth wins</button><button class="option" data-correct="false">Life sleeps</button><button class="option" data-correct="false">Fear speaks</button></div>
+          <p class="explanation">“Tempus” means time; “fugit” means flies or flees.</p>
+        </section>
+        <section class="question-card">
+          <div class="question-topline">Question 6</div>
+          <h2>What does “veni, vidi, vici” mean?</h2>
+          <div class="options"><button class="option" data-correct="true">I came, I saw, I conquered</button><button class="option" data-correct="false">I read, I wrote, I slept</button><button class="option" data-correct="false">I asked, I heard, I forgot</button><button class="option" data-correct="false">I loved, I lost, I returned</button></div>
+          <p class="explanation">A famous compact expression of rapid success.</p>
+        </section>
+        <section class="question-card">
+          <div class="question-topline">Question 7</div>
+          <h2>What does “amicus certus in re incerta cernitur” mean?</h2>
+          <div class="options"><button class="option" data-correct="true">A true friend is seen in uncertain times</button><button class="option" data-correct="false">A rich friend buys many things</button><button class="option" data-correct="false">A teacher speaks in a clear voice</button><button class="option" data-correct="false">A traveler never returns</button></div>
+          <p class="explanation">The phrase says that real friendship appears especially in difficult situations.</p>
+        </section>
+        <section class="question-card">
+          <div class="question-topline">Question 8</div>
+          <h2>What does “nil desperandum” mean?</h2>
+          <div class="options"><button class="option" data-correct="true">Never despair</button><button class="option" data-correct="false">Never study</button><button class="option" data-correct="false">Never speak</button><button class="option" data-correct="false">Never return</button></div>
+          <p class="explanation">It is a short expression of hope and perseverance.</p>
+        </section>
+        <section class="question-card">
+          <div class="question-topline">Question 9</div>
+          <h2>What does “verba volant, scripta manent” mean?</h2>
+          <div class="options"><button class="option" data-correct="true">Words fly away, writings remain</button><button class="option" data-correct="false">Books fly away, words sleep</button><button class="option" data-correct="false">Truth changes, lies remain</button><button class="option" data-correct="false">Voices remain, letters vanish</button></div>
+          <p class="explanation">It explains why written words are more lasting than spoken words.</p>
+        </section>
+        <section class="question-card">
+          <div class="question-topline">Question 10</div>
+          <h2>What does “dum spiro, spero” mean?</h2>
+          <div class="options"><button class="option" data-correct="true">While I breathe, I hope</button><button class="option" data-correct="false">While I read, I sleep</button><button class="option" data-correct="false">While I eat, I speak</button><button class="option" data-correct="false">While I wait, I forget</button></div>
+          <p class="explanation">A concise expression of hope as long as life continues.</p>
+        </section>
+    <section class="result">
+      <div>Your score</div>
+      <div class="score"><span id="score">0</span> / 10</div>
+      <div class="controls">
+        <a class="btn home" href="index.html">Back to Reading Corner</a>
+        <button class="btn reset" onclick="location.reload()">Try again</button>
+      </div>
+    </section>
+  </main>
+  <footer>© 2026 Reading Corner — Stories to go</footer>
+  <script>
+    let score = 0;
+    let answered = 0;
+    const total = 10;
+    document.querySelectorAll('.question-card').forEach((card, index) => {
+      const buttons = card.querySelectorAll('.option');
+      const explanation = card.querySelector('.explanation');
+      buttons.forEach(button => {
+        button.addEventListener('click', () => {
+          if (card.dataset.answered === 'true') return;
+          card.dataset.answered = 'true';
+          answered++;
+          const correct = button.dataset.correct === 'true';
+          if (correct) { score++; button.classList.add('correct'); }
+          else { button.classList.add('wrong'); buttons.forEach(b => { if (b.dataset.correct === 'true') b.classList.add('correct'); }); }
+          explanation.style.display = 'block';
+          document.getElementById('score').textContent = score;
+          if (typeof gtag === 'function') {
+            gtag('event', 'latin_answer', {
+              topic: 'Latin for Daily Life', question_number: index + 1, correct: correct
+            });
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
