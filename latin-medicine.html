@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Latin for Medicine | Reading Corner</title>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W2T7NTPHXZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-W2T7NTPHXZ', { page_title: 'Latin for Medicine', page_path: '/reading-corner/latin-medicine.html' });
+  </script>
+  <style>
+    :root {
+      --cream:#f6f1e8; --white:#fff; --text:#2f2a26; --muted:#6e655d;
+      --terracotta:#9c3b34; --terracotta-dark:#7e2f2a; --olive:#556b2f;
+      --border:#eadfce; --shadow:0 10px 30px rgba(60,35,20,.10);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(to bottom,#f8f4ee,#f3ede3);color:var(--text);line-height:1.6}
+    header{background:linear-gradient(rgba(32,22,16,.55),rgba(32,22,16,.62)),url('cover.png.png') center/cover no-repeat;color:white;text-align:center;padding:70px 20px}
+    header h1{font-size:46px;margin:0 0 12px}
+    header p{font-size:20px;max-width:850px;margin:0 auto}
+    main{max-width:980px;margin:-35px auto 60px;padding:0 18px}
+    .intro,.question-card,.result{background:rgba(255,255,255,.97);border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow);padding:28px;margin-bottom:22px}
+    .intro h2{margin-top:0;color:var(--terracotta-dark)}
+    .latin-expression{font-size:26px;font-weight:bold;color:var(--terracotta-dark);background:#fff8ec;border-left:6px solid var(--terracotta);border-radius:14px;padding:14px 18px;margin:18px 0}
+    .question-topline{font-size:13px;text-transform:uppercase;letter-spacing:.8px;color:var(--olive);font-weight:bold}
+    .question-card h2{font-size:23px;margin:8px 0 18px;color:var(--terracotta-dark)}
+    .options{display:grid;grid-template-columns:1fr;gap:10px}
+    .option{text-align:left;border:1px solid #dccdbb;border-radius:14px;background:#fffdf9;padding:14px 16px;font-size:16px;cursor:pointer;transition:.2s}
+    .option:hover{transform:translateY(-1px);box-shadow:0 5px 12px rgba(60,35,20,.10)}
+    .option.correct{background:#eef7e8;border-color:#7aa45a;color:#36521f;font-weight:bold}
+    .option.wrong{background:#fae8e6;border-color:#b95b52;color:#7e2f2a;font-weight:bold}
+    .explanation{display:none;margin:14px 0 0;color:#4e443d;background:#fff9ef;border-radius:12px;padding:13px 15px}
+    .controls{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;border-radius:14px;padding:12px 18px;font-weight:bold;text-decoration:none;border:0;cursor:pointer}
+    .btn.home{background:var(--terracotta);color:white}
+    .btn.reset{background:#6f8f4e;color:white}
+    .result{text-align:center}
+    .score{font-size:34px;font-weight:bold;color:var(--terracotta-dark)}
+    footer{text-align:center;color:var(--muted);padding:20px}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Latin for Medicine</h1>
+    <p>Latin expressions that help learners understand medical language, diagnosis, therapy and the human body.</p>
+  </header>
+  <main>
+    <section class="intro">
+      <h2>How to use this quiz</h2>
+      <p>Choose the best answer. After every question, you will see a short explanation. The goal is not only to guess, but to understand the Latin expression.</p>
+      <div class="latin-expression">Non scholae sed vitae discimus.</div>
+      <p><strong>Meaning:</strong> We learn not for school, but for life.</p>
+    </section>
+    
+        <section class="question-card">
+          <div class="question-topline">Question 1</div>
+          <h2>What does “mens sana in corpore sano” mean?</h2>
+          <div class="options"><button class="option" data-correct="true">A healthy mind in a healthy body</button><button class="option" data-correct="false">A doctor must know the body</button><button class="option" data-correct="false">Pain is a teacher</button><button class="option" data-correct="false">The body heals itself</button></div>
+          <p class="explanation">“Mens” means mind; “corpus” means body. The phrase connects intellectual and physical health.</p>
+        </section>
+        <section class="question-card">
+          <div class="question-topline">Question 2</div>
+          <h2>In medical language, what does “in vitro” literally mean?</h2>
+          <div class="options"><button class="option" data-correct="false">In the living body</button><button class="option" data-correct="true">In glass</button><button class="option" data-correct="false">After death</button><button class="option" data-correct="false">Without pain</button></div>
+          <p class="explanation">“Vitrum” means glass. “In vitro” refers to processes outside a living organism, for example in a laboratory dish.</p>
+        </section>
+        <section class="question-card">
+          <div class="question-topline">Question 3</div>
+          <h2>What is the opposite of “in vitro”?</h2>
+          <div class="options"><button class="option" data-correct="false">in absentia</button><button class="option" data-correct="true">in vivo</button><button class="option" data-correct="false">in dubio</button><button class="option" data-correct="false">in camera</button></div>
+          <p class="explanation">“In vivo” means “in the living”; in medical contexts it refers to processes in a living organism.</p>
+        </section>
+        <section class="question-card">
+          <div class="question-topline">Question 4</div>
+          <h2>What does “primum non nocere” express?</h2>
+          <div class="options"><button class="option" data-correct="true">First, do no harm</button><button class="option" data-correct="false">First, ask the patient</button><button class="option" data-correct="false">First, write the diagnosis</button><button class="option" data-correct="false">First, measure the fever</button></div>
+          <p class="explanation">This phrase expresses a basic ethical principle in medicine: treatment should not create unnecessary harm.</p>
+        </section>
+        <section class="question-card">
+          <div class="question-topline">Question 5</div>
+          <h2>What does “diagnosis” originally suggest?</h2>
+          <div class="options"><button class="option" data-correct="true">Knowing through / distinguishing clearly</button><button class="option" data-correct="false">A written prescription</button><button class="option" data-correct="false">The end of illness</button><button class="option" data-correct="false">A surgical instrument</button></div>
+          <p class="explanation">The Greek-Latin medical tradition often uses terms of knowing, seeing and distinguishing.</p>
+        </section>
+        <section class="question-card">
+          <div class="question-topline">Question 6</div>
+          <h2>What does “causa morbi” mean?</h2>
+          <div class="options"><button class="option" data-correct="true">The cause of the disease</button><button class="option" data-correct="false">The end of treatment</button><button class="option" data-correct="false">The patient’s memory</button><button class="option" data-correct="false">The doctor’s advice</button></div>
+          <p class="explanation">“Causa” means cause; “morbus” means illness or disease.</p>
+        </section>
+        <section class="question-card">
+          <div class="question-topline">Question 7</div>
+          <h2>What is the meaning of “status praesens”?</h2>
+          <div class="options"><button class="option" data-correct="false">The previous illness</button><button class="option" data-correct="true">The present condition</button><button class="option" data-correct="false">The final diagnosis</button><button class="option" data-correct="false">A secret symptom</button></div>
+          <p class="explanation">“Praesens” means present. In medical notes it points to the current state of the patient.</p>
+        </section>
+        <section class="question-card">
+          <div class="question-topline">Question 8</div>
+          <h2>What does “post mortem” mean?</h2>
+          <div class="options"><button class="option" data-correct="false">Before birth</button><button class="option" data-correct="true">After death</button><button class="option" data-correct="false">During treatment</button><button class="option" data-correct="false">Without symptoms</button></div>
+          <p class="explanation">“Post” means after; “mors/mortem” relates to death.</p>
+        </section>
+        <section class="question-card">
+          <div class="question-topline">Question 9</div>
+          <h2>What does “sine dolore” mean?</h2>
+          <div class="options"><button class="option" data-correct="true">Without pain</button><button class="option" data-correct="false">With fever</button><button class="option" data-correct="false">After the operation</button><button class="option" data-correct="false">Through the skin</button></div>
+          <p class="explanation">“Sine” means without; “dolor” means pain.</p>
+        </section>
+        <section class="question-card">
+          <div class="question-topline">Question 10</div>
+          <h2>What does “corpus” mean?</h2>
+          <div class="options"><button class="option" data-correct="true">Body</button><button class="option" data-correct="false">Mind</button><button class="option" data-correct="false">Blood</button><button class="option" data-correct="false">Medicine</button></div>
+          <p class="explanation">“Corpus” is one of the most important Latin words behind many modern terms.</p>
+        </section>
+    <section class="result">
+      <div>Your score</div>
+      <div class="score"><span id="score">0</span> / 10</div>
+      <div class="controls">
+        <a class="btn home" href="index.html">Back to Reading Corner</a>
+        <button class="btn reset" onclick="location.reload()">Try again</button>
+      </div>
+    </section>
+  </main>
+  <footer>© 2026 Reading Corner — Stories to go</footer>
+  <script>
+    let score = 0;
+    let answered = 0;
+    const total = 10;
+    document.querySelectorAll('.question-card').forEach((card, index) => {
+      const buttons = card.querySelectorAll('.option');
+      const explanation = card.querySelector('.explanation');
+      buttons.forEach(button => {
+        button.addEventListener('click', () => {
+          if (card.dataset.answered === 'true') return;
+          card.dataset.answered = 'true';
+          answered++;
+          const correct = button.dataset.correct === 'true';
+          if (correct) { score++; button.classList.add('correct'); }
+          else { button.classList.add('wrong'); buttons.forEach(b => { if (b.dataset.correct === 'true') b.classList.add('correct'); }); }
+          explanation.style.display = 'block';
+          document.getElementById('score').textContent = score;
+          if (typeof gtag === 'function') {
+            gtag('event', 'latin_answer', {
+              topic: 'Latin for Medicine', question_number: index + 1, correct: correct
+            });
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

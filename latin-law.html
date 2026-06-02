@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Latin for Law | Reading Corner</title>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W2T7NTPHXZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-W2T7NTPHXZ', { page_title: 'Latin for Law', page_path: '/reading-corner/latin-law.html' });
+  </script>
+  <style>
+    :root {
+      --cream:#f6f1e8; --white:#fff; --text:#2f2a26; --muted:#6e655d;
+      --terracotta:#9c3b34; --terracotta-dark:#7e2f2a; --olive:#556b2f;
+      --border:#eadfce; --shadow:0 10px 30px rgba(60,35,20,.10);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(to bottom,#f8f4ee,#f3ede3);color:var(--text);line-height:1.6}
+    header{background:linear-gradient(rgba(32,22,16,.55),rgba(32,22,16,.62)),url('cover.png.png') center/cover no-repeat;color:white;text-align:center;padding:70px 20px}
+    header h1{font-size:46px;margin:0 0 12px}
+    header p{font-size:20px;max-width:850px;margin:0 auto}
+    main{max-width:980px;margin:-35px auto 60px;padding:0 18px}
+    .intro,.question-card,.result{background:rgba(255,255,255,.97);border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow);padding:28px;margin-bottom:22px}
+    .intro h2{margin-top:0;color:var(--terracotta-dark)}
+    .latin-expression{font-size:26px;font-weight:bold;color:var(--terracotta-dark);background:#fff8ec;border-left:6px solid var(--terracotta);border-radius:14px;padding:14px 18px;margin:18px 0}
+    .question-topline{font-size:13px;text-transform:uppercase;letter-spacing:.8px;color:var(--olive);font-weight:bold}
+    .question-card h2{font-size:23px;margin:8px 0 18px;color:var(--terracotta-dark)}
+    .options{display:grid;grid-template-columns:1fr;gap:10px}
+    .option{text-align:left;border:1px solid #dccdbb;border-radius:14px;background:#fffdf9;padding:14px 16px;font-size:16px;cursor:pointer;transition:.2s}
+    .option:hover{transform:translateY(-1px);box-shadow:0 5px 12px rgba(60,35,20,.10)}
+    .option.correct{background:#eef7e8;border-color:#7aa45a;color:#36521f;font-weight:bold}
+    .option.wrong{background:#fae8e6;border-color:#b95b52;color:#7e2f2a;font-weight:bold}
+    .explanation{display:none;margin:14px 0 0;color:#4e443d;background:#fff9ef;border-radius:12px;padding:13px 15px}
+    .controls{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;border-radius:14px;padding:12px 18px;font-weight:bold;text-decoration:none;border:0;cursor:pointer}
+    .btn.home{background:var(--terracotta);color:white}
+    .btn.reset{background:#6f8f4e;color:white}
+    .result{text-align:center}
+    .score{font-size:34px;font-weight:bold;color:var(--terracotta-dark)}
+    footer{text-align:center;color:var(--muted);padding:20px}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Latin for Law</h1>
+    <p>Latin expressions useful for legal reasoning, evidence, responsibility and argumentation.</p>
+  </header>
+  <main>
+    <section class="intro">
+      <h2>How to use this quiz</h2>
+      <p>Choose the best answer. After every question, you will see a short explanation. The goal is not only to guess, but to understand the Latin expression.</p>
+      <div class="latin-expression">Non scholae sed vitae discimus.</div>
+      <p><strong>Meaning:</strong> We learn not for school, but for life.</p>
+    </section>
+    
+        <section class="question-card">
+          <div class="question-topline">Question 1</div>
+          <h2>What does “in dubio pro reo” mean?</h2>
+          <div class="options"><button class="option" data-correct="true">In doubt, for the accused</button><button class="option" data-correct="false">In court, for the judge</button><button class="option" data-correct="false">In law, for the state</button><button class="option" data-correct="false">In evidence, for the witness</button></div>
+          <p class="explanation">This expresses the idea that unresolved doubt should benefit the accused.</p>
+        </section>
+        <section class="question-card">
+          <div class="question-topline">Question 2</div>
+          <h2>What does “pacta sunt servanda” mean?</h2>
+          <div class="options"><button class="option" data-correct="true">Contracts must be kept</button><button class="option" data-correct="false">Witnesses must speak</button><button class="option" data-correct="false">The law must be changed</button><button class="option" data-correct="false">Property must be divided</button></div>
+          <p class="explanation">A central maxim in contract law and international law: agreements are binding.</p>
+        </section>
+        <section class="question-card">
+          <div class="question-topline">Question 3</div>
+          <h2>What does “bona fide” mean?</h2>
+          <div class="options"><button class="option" data-correct="true">In good faith</button><button class="option" data-correct="false">By force</button><button class="option" data-correct="false">Without evidence</button><button class="option" data-correct="false">After judgment</button></div>
+          <p class="explanation">“Bona fides” means good faith; the expression is important in law and commerce.</p>
+        </section>
+        <section class="question-card">
+          <div class="question-topline">Question 4</div>
+          <h2>What does “de facto” mean?</h2>
+          <div class="options"><button class="option" data-correct="true">According to the facts</button><button class="option" data-correct="false">According to the law</button><button class="option" data-correct="false">Before the court</button><button class="option" data-correct="false">Without a contract</button></div>
+          <p class="explanation">“De facto” refers to reality in practice, even if legal recognition is different.</p>
+        </section>
+        <section class="question-card">
+          <div class="question-topline">Question 5</div>
+          <h2>What does “de iure” mean?</h2>
+          <div class="options"><button class="option" data-correct="true">According to law</button><button class="option" data-correct="false">According to habit</button><button class="option" data-correct="false">According to fear</button><button class="option" data-correct="false">According to witnesses</button></div>
+          <p class="explanation">“Ius/iuris” means law. “De iure” means legally or according to law.</p>
+        </section>
+        <section class="question-card">
+          <div class="question-topline">Question 6</div>
+          <h2>What does “actus reus” refer to?</h2>
+          <div class="options"><button class="option" data-correct="true">The guilty act</button><button class="option" data-correct="false">The good witness</button><button class="option" data-correct="false">The legal contract</button><button class="option" data-correct="false">The final appeal</button></div>
+          <p class="explanation">In common-law terminology, actus reus is the external element of a crime.</p>
+        </section>
+        <section class="question-card">
+          <div class="question-topline">Question 7</div>
+          <h2>What does “mens rea” refer to?</h2>
+          <div class="options"><button class="option" data-correct="true">The guilty mind</button><button class="option" data-correct="false">The public court</button><button class="option" data-correct="false">The written law</button><button class="option" data-correct="false">The harmed object</button></div>
+          <p class="explanation">“Mens rea” is the mental element of a crime in common-law terminology.</p>
+        </section>
+        <section class="question-card">
+          <div class="question-topline">Question 8</div>
+          <h2>What does “habeas corpus” literally concerns?</h2>
+          <div class="options"><button class="option" data-correct="true">You shall have the body</button><button class="option" data-correct="false">You shall sign the contract</button><button class="option" data-correct="false">You shall pay the debt</button><button class="option" data-correct="false">You shall leave the court</button></div>
+          <p class="explanation">Historically, it protects against unlawful detention by requiring a detained person to be brought before a court.</p>
+        </section>
+        <section class="question-card">
+          <div class="question-topline">Question 9</div>
+          <h2>What does “prima facie” mean?</h2>
+          <div class="options"><button class="option" data-correct="true">At first sight</button><button class="option" data-correct="false">After appeal</button><button class="option" data-correct="false">In bad faith</button><button class="option" data-correct="false">Without law</button></div>
+          <p class="explanation">A prima facie case appears sufficient at first view, before deeper examination.</p>
+        </section>
+        <section class="question-card">
+          <div class="question-topline">Question 10</div>
+          <h2>What does “res iudicata” mean?</h2>
+          <div class="options"><button class="option" data-correct="true">A judged matter</button><button class="option" data-correct="false">A written confession</button><button class="option" data-correct="false">A secret agreement</button><button class="option" data-correct="false">A legal person</button></div>
+          <p class="explanation">It refers to a matter that has already been decided by a competent court.</p>
+        </section>
+    <section class="result">
+      <div>Your score</div>
+      <div class="score"><span id="score">0</span> / 10</div>
+      <div class="controls">
+        <a class="btn home" href="index.html">Back to Reading Corner</a>
+        <button class="btn reset" onclick="location.reload()">Try again</button>
+      </div>
+    </section>
+  </main>
+  <footer>© 2026 Reading Corner — Stories to go</footer>
+  <script>
+    let score = 0;
+    let answered = 0;
+    const total = 10;
+    document.querySelectorAll('.question-card').forEach((card, index) => {
+      const buttons = card.querySelectorAll('.option');
+      const explanation = card.querySelector('.explanation');
+      buttons.forEach(button => {
+        button.addEventListener('click', () => {
+          if (card.dataset.answered === 'true') return;
+          card.dataset.answered = 'true';
+          answered++;
+          const correct = button.dataset.correct === 'true';
+          if (correct) { score++; button.classList.add('correct'); }
+          else { button.classList.add('wrong'); buttons.forEach(b => { if (b.dataset.correct === 'true') b.classList.add('correct'); }); }
+          explanation.style.display = 'block';
+          document.getElementById('score').textContent = score;
+          if (typeof gtag === 'function') {
+            gtag('event', 'latin_answer', {
+              topic: 'Latin for Law', question_number: index + 1, correct: correct
+            });
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
