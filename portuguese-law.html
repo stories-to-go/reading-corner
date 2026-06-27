@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reading Corner | Português | Become a Law Expert</title>
+
+  <!--
+    Google Analytics 4 for Reading Corner
+    Replace G-W2T7NTPHXZ with your real Measurement ID if needed.
+  -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W2T7NTPHXZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-W2T7NTPHXZ', {
+      page_title: 'Portuguese Become a Law Expert',
+      page_path: '/reading-corner/portuguese-law.html'
+    });
+  </script>
+
+  <style>
+    :root {
+      --cream: #f6f1e8;
+      --soft-cream: #fcf8f2;
+      --terracotta: #9c3b34;
+      --terracotta-dark: #7e2f2a;
+      --olive: #556b2f;
+      --olive-dark: #3f5221;
+      --lake-blue: #335c81;
+      --lake-blue-dark: #274967;
+      --text: #211f1d;
+      --muted: #6e655d;
+      --white: #ffffff;
+      --border: #eadfce;
+      --shadow: 0 18px 44px rgba(60, 35, 20, 0.16);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      background:
+        linear-gradient(rgba(246, 241, 232, 0.86), rgba(246, 241, 232, 0.92)),
+        url('cover.png.png') center center / cover fixed no-repeat;
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .topbar {
+      background: var(--lake-blue);
+      color: white;
+      text-align: center;
+      padding: 46px 20px 34px;
+      box-shadow: 0 4px 16px rgba(60, 35, 20, 0.18);
+    }
+
+    .topline {
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 50px;
+      line-height: 1.1;
+      font-weight: 800;
+    }
+
+    .subtitle {
+      margin: 18px 0 0;
+      font-size: 22px;
+      font-weight: 400;
+    }
+
+    main {
+      width: min(980px, calc(100% - 34px));
+      margin: 40px auto 56px;
+    }
+
+    .quiz-card {
+      background: rgba(255, 255, 255, 0.96);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 34px 38px 42px;
+    }
+
+    .quiz-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 14px;
+      color: var(--muted);
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .progress-wrap {
+      width: 100%;
+      height: 14px;
+      background: #efe4d6;
+      border: 1px solid #dfd1c0;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 34px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--lake-blue), var(--olive));
+      transition: width 0.25s ease;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #e7f0f7;
+      color: var(--lake-blue-dark);
+      border: 1px solid #c8d9e8;
+      border-radius: 999px;
+      padding: 8px 15px;
+      font-weight: bold;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    .question {
+      font-size: 30px;
+      line-height: 1.35;
+      margin: 0 0 26px;
+      font-weight: 800;
+    }
+
+    .answers {
+      display: grid;
+      gap: 14px;
+    }
+
+    .answer {
+      border: 1px solid #ead9c4;
+      background: #fffdf9;
+      border-radius: 16px;
+      min-height: 58px;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.18s ease, border 0.18s ease, transform 0.18s ease;
+    }
+
+    .answer:hover:not(:disabled) {
+      background: #f3f8fc;
+      transform: translateY(-1px);
+    }
+
+    .answer:disabled { cursor: default; }
+
+    .answer.correct {
+      background: #edf6e7;
+      border-color: #7ba65a;
+      color: #304b20;
+    }
+
+    .answer.wrong {
+      background: #fdecea;
+      border-color: #bc6a64;
+      color: #7e2f2a;
+    }
+
+    .feedback {
+      margin-top: 18px;
+      padding: 15px 17px;
+      border-radius: 14px;
+      font-weight: bold;
+      display: none;
+    }
+
+    .feedback.good {
+      display: block;
+      background: #edf6e7;
+      color: #304b20;
+      border: 1px solid #b8d6a5;
+    }
+
+    .feedback.bad {
+      display: block;
+      background: #fdecea;
+      color: #7e2f2a;
+      border: 1px solid #e1b1ad;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+
+    .nav-button {
+      border: none;
+      border-radius: 14px;
+      padding: 14px 22px;
+      min-width: 150px;
+      color: white;
+      background: var(--lake-blue);
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(60, 35, 20, 0.14);
+      transition: transform 0.18s ease, background 0.18s ease;
+    }
+
+    .nav-button:hover {
+      background: var(--lake-blue-dark);
+      transform: translateY(-1px);
+    }
+
+    .nav-button.secondary { background: var(--olive); }
+    .nav-button.secondary:hover { background: var(--olive-dark); }
+
+    .nav-button:disabled {
+      background: #cfc1b2;
+      cursor: default;
+      transform: none;
+    }
+
+    .result-screen {
+      display: none;
+      text-align: center;
+      padding: 10px 0 4px;
+    }
+
+    .result-screen h2 {
+      font-size: 38px;
+      margin: 0 0 14px;
+      color: var(--lake-blue-dark);
+    }
+
+    .result-score {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 0 0 10px;
+    }
+
+    .result-message {
+      color: var(--muted);
+      font-size: 18px;
+      max-width: 680px;
+      margin: 0 auto 26px;
+    }
+
+    .small-link {
+      display: inline-block;
+      margin-top: 18px;
+      color: var(--lake-blue-dark);
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      margin: 40px 0 24px;
+      font-size: 15px;
+    }
+
+    @media (max-width: 760px) {
+      .topbar { padding: 36px 16px 28px; }
+      h1 { font-size: 38px; }
+      .subtitle { font-size: 18px; }
+      main { width: min(100% - 24px, 980px); margin-top: 24px; }
+      .quiz-card { padding: 24px 20px 30px; }
+      .question { font-size: 24px; }
+      .answer { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topline">Reading Corner · Português</div>
+    <h1>Become a Law Expert</h1>
+    <p class="subtitle">Mistério na Rua das Tulipas — quiz jurídico inspirado no sistema brasileiro</p>
+  </header>
+
+  <main>
+    <section class="quiz-card" id="quizCard">
+      <div class="quiz-head">
+        <div id="questionCounter">Pergunta 1 de 20</div>
+        <div id="scoreBox">Pontos: 0</div>
+      </div>
+      <div class="progress-wrap" aria-hidden="true">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+
+      <div class="tag" id="questionTag">Investigação</div>
+      <h2 class="question" id="questionText"></h2>
+      <div class="answers" id="answers"></div>
+      <div class="feedback" id="feedback"></div>
+
+      <div class="controls">
+        <button class="nav-button secondary" id="homeButton" onclick="window.location.href='index.html'">Voltar à página inicial</button>
+        <button class="nav-button" id="nextButton" disabled>Próxima pergunta</button>
+      </div>
+    </section>
+
+    <section class="quiz-card result-screen" id="resultScreen">
+      <h2>Resultado</h2>
+      <p class="result-score" id="finalScore"></p>
+      <p class="result-message" id="finalMessage"></p>
+      <button class="nav-button" onclick="restartQuiz()">Tentar novamente</button>
+      <br>
+      <a class="small-link" href="index.html">Voltar à página inicial</a>
+    </section>
+  </main>
+
+  <footer>© 2026 Reading Corner — Stories to go</footer>
+
+  <script>
+    const questions = [
+      {
+        tag: "Sistema brasileiro",
+        question: "No Brasil, uma investigação de homicídio começa normalmente em que fase?",
+        answers: [
+          "Em uma votação entre os vizinhos do prédio.",
+          "Em um inquérito policial, conduzido pela polícia judiciária.",
+          "Em uma entrevista de televisão com a senhorita Valle.",
+          "Em uma decisão direta dos adolescentes investigadores."
+        ],
+        correct: 1
+      },
+      {
+        tag: "Presunção de inocência",
+        question: "Segundo a lógica do Estado de Direito brasileiro, por que Giacomo não deve afirmar imediatamente que Moreno é culpado?",
+        answers: [
+          "Porque Moreno é forte e mora no quarto andar.",
+          "Porque Simona ainda não terminou de falar.",
+          "Porque uma pessoa deve ser tratada como inocente até haver condenação definitiva.",
+          "Porque a senhorita Valle apareceu na televisão."
+        ],
+        correct: 2
+      },
+      {
+        tag: "Notícia-crime",
+        question: "Quando a mãe de Giacomo diz que policiais estão indo aos apartamentos, qual é o objetivo mais provável?",
+        answers: [
+          "Comprar açúcar para fazer um bolo.",
+          "Consertar o elevador do prédio.",
+          "Organizar uma festa para os moradores.",
+          "Colher primeiras informações sobre o crime."
+        ],
+        correct: 3
+      },
+      {
+        tag: "Testemunha",
+        question: "No caso, Giacomo pode ser considerado testemunha porque...",
+        answers: [
+          "ouviu barulhos e viu a porta aberta na noite do crime.",
+          "é jogador de futebol.",
+          "conhece Simona.",
+          "tem uma bicicleta."
+        ],
+        correct: 0
+      },
+      {
+        tag: "Prova material",
+        question: "A estatueta é importante juridicamente porque pode ser...",
+        answers: [
+          "um presente romântico para Simona.",
+          "uma possível arma do crime e uma prova material.",
+          "um documento do condomínio.",
+          "um objeto sem nenhuma relação com a investigação."
+        ],
+        correct: 1
+      },
+      {
+        tag: "Perícia",
+        question: "No Brasil, qual seria o caminho correto depois de encontrar a possível arma do crime?",
+        answers: [
+          "Levar o objeto ao laboratório para exame pericial.",
+          "Deixar o objeto no jardim.",
+          "Entregar o objeto à pessoa mais simpática do prédio.",
+          "Limpar o objeto para deixá-lo mais bonito."
+        ],
+        correct: 0
+      },
+      {
+        tag: "Cadeia de custódia",
+        question: "Por que ninguém deveria mexer desnecessariamente na estatueta?",
+        answers: [
+          "Porque ela é provavelmente muito cara.",
+          "Porque a senhora Valle poderia querer vê-la.",
+          "Porque isso poderia contaminar ou prejudicar a prova.",
+          "Porque Giacomo gosta de objetos de arte."
+        ],
+        correct: 2
+      },
+      {
+        tag: "Indícios",
+        question: "O fato de Moreno carregar uma bolsa esportiva de madrugada é, juridicamente, melhor entendido como...",
+        answers: [
+          "uma sentença condenatória.",
+          "um indício que precisa ser analisado junto com outras provas.",
+          "uma confissão formal.",
+          "uma prova de que não houve crime."
+        ],
+        correct: 1
+      },
+      {
+        tag: "Flagrante",
+        question: "Se a polícia encontra Moreno com Giacomo amarrado no porta-malas, qual situação jurídica pode existir?",
+        answers: [
+          "Apenas uma conversa informal de vizinhos.",
+          "Uma audiência civil sobre barulho.",
+          "Uma prisão em flagrante, dependendo da avaliação concreta dos fatos.",
+          "Um concurso de literatura."
+        ],
+        correct: 2
+      },
+      {
+        tag: "Crime contra a pessoa",
+        question: "O ato de Moreno contra Giacomo, ao amarrá-lo e colocá-lo no porta-malas, seria tratado como...",
+        answers: [
+          "um simples mal-entendido sem importância.",
+          "um problema de condomínio apenas.",
+          "uma brincadeira permitida pela lei.",
+          "um fato grave contra a liberdade e a integridade da vítima."
+        ],
+        correct: 3
+      },
+      {
+        tag: "Homicídio",
+        question: "A morte violenta do senhor Cassi exige investigação porque pode configurar...",
+        answers: [
+          "homicídio.",
+          "divórcio.",
+          "contrato de aluguel.",
+          "infração de trânsito."
+        ],
+        correct: 0
+      },
+      {
+        tag: "Suspeito e acusado",
+        question: "No início da investigação, o senhor Moreno é melhor descrito como...",
+        answers: [
+          "juiz do caso.",
+          "suspeito, não necessariamente culpado.",
+          "advogado de Cassi.",
+          "perito oficial."
+        ],
+        correct: 1
+      },
+      {
+        tag: "Confissão",
+        question: "Quando a senhora Bianchi diz que matou Cassi, isso é...",
+        answers: [
+          "apenas uma opinião de Simona.",
+          "uma notícia de jornal.",
+          "uma confissão, mas ainda deve ser analisada com as outras provas.",
+          "uma decisão final do tribunal."
+        ],
+        correct: 2
+      },
+      {
+        tag: "Motivo",
+        question: "Na história, qual possível motivo aparece para o crime cometido pela senhora Bianchi?",
+        answers: [
+          "Cassi sabia da relação dela com Moreno e queria contar ao marido dela.",
+          "Cassi queria jogar futebol com Giacomo.",
+          "Cassi quebrou o elevador de propósito.",
+          "Cassi roubou o cachorro Bebi."
+        ],
+        correct: 0
+      },
+      {
+        tag: "Prova testemunhal",
+        question: "Os depoimentos de Giacomo e Simona são importantes porque...",
+        answers: [
+          "substituem automaticamente a perícia.",
+          "podem ajudar a reconstruir os fatos e a sequência dos acontecimentos.",
+          "são sempre mais fortes que qualquer prova material.",
+          "não têm nenhum valor em investigação criminal."
+        ],
+        correct: 1
+      },
+      {
+        tag: "Direito de defesa",
+        question: "Mesmo se a senhora Bianchi confessar, no sistema brasileiro ela ainda tem direito a...",
+        answers: [
+          "não ser investigada nunca mais.",
+          "escolher sozinha a sentença.",
+          "defesa, contraditório e devido processo legal.",
+          "mandar prender todos os vizinhos."
+        ],
+        correct: 2
+      },
+      {
+        tag: "Ministério Público",
+        question: "No sistema penal brasileiro, quem normalmente apresenta a acusação em crimes como homicídio?",
+        answers: [
+          "O síndico do prédio.",
+          "A mãe de Giacomo.",
+          "O jornalista da televisão.",
+          "O Ministério Público."
+        ],
+        correct: 3
+      },
+      {
+        tag: "Juiz",
+        question: "Qual é o papel do juiz em um processo penal?",
+        answers: [
+          "Julgar o caso com base nas provas e na lei.",
+          "Investigar escondido no jardim.",
+          "Escrever a matéria para a televisão.",
+          "Substituir todas as testemunhas."
+        ],
+        correct: 0
+      },
+      {
+        tag: "Júri",
+        question: "No Brasil, crimes dolosos contra a vida, como homicídio doloso, podem ir a julgamento pelo...",
+        answers: [
+          "conselho dos vizinhos.",
+          "Tribunal do Júri.",
+          "clube de futebol de Giacomo.",
+          "grupo de jornalistas."
+        ],
+        correct: 1
+      },
+      {
+        tag: "Conclusão jurídica",
+        question: "Qual é a melhor atitude jurídica diante de um mistério criminal?",
+        answers: [
+          "Escolher o culpado mais antipático imediatamente.",
+          "Acreditar apenas em boatos do prédio.",
+          "Reunir indícios, provas materiais, perícias e depoimentos antes de concluir.",
+          "Ignorar a polícia e resolver tudo sozinho."
+        ],
+        correct: 2
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let answered = false;
+
+    const questionCounter = document.getElementById('questionCounter');
+    const scoreBox = document.getElementById('scoreBox');
+    const progressBar = document.getElementById('progressBar');
+    const questionTag = document.getElementById('questionTag');
+    const questionText = document.getElementById('questionText');
+    const answersBox = document.getElementById('answers');
+    const feedback = document.getElementById('feedback');
+    const nextButton = document.getElementById('nextButton');
+    const quizCard = document.getElementById('quizCard');
+    const resultScreen = document.getElementById('resultScreen');
+    const finalScore = document.getElementById('finalScore');
+    const finalMessage = document.getElementById('finalMessage');
+
+    function renderQuestion() {
+      answered = false;
+      nextButton.disabled = true;
+      feedback.className = 'feedback';
+      feedback.textContent = '';
+
+      const item = questions[currentQuestion];
+      questionCounter.textContent = `Pergunta ${currentQuestion + 1} de ${questions.length}`;
+      scoreBox.textContent = `Pontos: ${score}`;
+      progressBar.style.width = `${(currentQuestion / questions.length) * 100}%`;
+      questionTag.textContent = item.tag;
+      questionText.textContent = item.question;
+      answersBox.innerHTML = '';
+
+      item.answers.forEach((answer, index) => {
+        const button = document.createElement('button');
+        button.className = 'answer';
+        button.textContent = answer;
+        button.onclick = () => chooseAnswer(index, button);
+        answersBox.appendChild(button);
+      });
+
+      nextButton.textContent = currentQuestion === questions.length - 1 ? 'Ver resultado' : 'Próxima pergunta';
+    }
+
+    function chooseAnswer(index, selectedButton) {
+      if (answered) return;
+      answered = true;
+
+      const item = questions[currentQuestion];
+      const buttons = answersBox.querySelectorAll('.answer');
+
+      buttons.forEach((button, buttonIndex) => {
+        button.disabled = true;
+        if (buttonIndex === item.correct) {
+          button.classList.add('correct');
+        }
+      });
+
+      if (index === item.correct) {
+        score++;
+        scoreBox.textContent = `Pontos: ${score}`;
+        feedback.textContent = 'Certo! Muito bem.';
+        feedback.className = 'feedback good';
+      } else {
+        selectedButton.classList.add('wrong');
+        feedback.textContent = `Ainda não. A resposta correta é: ${item.answers[item.correct]}`;
+        feedback.className = 'feedback bad';
+      }
+
+      nextButton.disabled = false;
+    }
+
+    nextButton.addEventListener('click', () => {
+      if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    });
+
+    function showResult() {
+      progressBar.style.width = '100%';
+      quizCard.style.display = 'none';
+      resultScreen.style.display = 'block';
+      finalScore.textContent = `Você fez ${score} de ${questions.length} pontos.`;
+
+      if (score >= 18) {
+        finalMessage.textContent = 'Excelente! Você pensou como jurista: analisou provas, suspeitos, direitos e procedimento.';
+      } else if (score >= 14) {
+        finalMessage.textContent = 'Muito bom! Você entendeu os pontos principais do raciocínio jurídico no caso.';
+      } else if (score >= 10) {
+        finalMessage.textContent = 'Bom começo. Releia a história e preste atenção às provas, às testemunhas e aos direitos dos suspeitos.';
+      } else {
+        finalMessage.textContent = 'Continue com calma. O objetivo é aprender a pensar juridicamente, passo a passo.';
+      }
+
+      if (typeof gtag === 'function') {
+        gtag('event', 'quiz_finished', {
+          language: 'Portuguese',
+          quiz_type: 'Law',
+          legal_system: 'Brazil',
+          score: score,
+          total: questions.length
+        });
+      }
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      quizCard.style.display = 'block';
+      resultScreen.style.display = 'none';
+      renderQuestion();
+    }
+
+    renderQuestion();
+  </script>
+</body>
+</html>
